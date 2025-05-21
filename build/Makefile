@@ -129,6 +129,30 @@ NBodySim/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/build
 .PHONY : NBodySim/fast
 
+src/BruteForce.o: src/BruteForce.cpp.o
+.PHONY : src/BruteForce.o
+
+# target to build an object file
+src/BruteForce.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o
+.PHONY : src/BruteForce.cpp.o
+
+src/BruteForce.i: src/BruteForce.cpp.i
+.PHONY : src/BruteForce.i
+
+# target to preprocess a source file
+src/BruteForce.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BruteForce.cpp.i
+.PHONY : src/BruteForce.cpp.i
+
+src/BruteForce.s: src/BruteForce.cpp.s
+.PHONY : src/BruteForce.s
+
+# target to generate assembly for a file
+src/BruteForce.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BruteForce.cpp.s
+.PHONY : src/BruteForce.cpp.s
+
 src/Particle.o: src/Particle.cpp.o
 .PHONY : src/Particle.o
 
@@ -152,6 +176,30 @@ src/Particle.s: src/Particle.cpp.s
 src/Particle.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Particle.cpp.s
 .PHONY : src/Particle.cpp.s
+
+src/ParticleSystem.o: src/ParticleSystem.cpp.o
+.PHONY : src/ParticleSystem.o
+
+# target to build an object file
+src/ParticleSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o
+.PHONY : src/ParticleSystem.cpp.o
+
+src/ParticleSystem.i: src/ParticleSystem.cpp.i
+.PHONY : src/ParticleSystem.i
+
+# target to preprocess a source file
+src/ParticleSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.i
+.PHONY : src/ParticleSystem.cpp.i
+
+src/ParticleSystem.s: src/ParticleSystem.cpp.s
+.PHONY : src/ParticleSystem.s
+
+# target to generate assembly for a file
+src/ParticleSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.s
+.PHONY : src/ParticleSystem.cpp.s
 
 src/Simulation.o: src/Simulation.cpp.o
 .PHONY : src/Simulation.o
@@ -210,9 +258,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... NBodySim"
+	@echo "... src/BruteForce.o"
+	@echo "... src/BruteForce.i"
+	@echo "... src/BruteForce.s"
 	@echo "... src/Particle.o"
 	@echo "... src/Particle.i"
 	@echo "... src/Particle.s"
+	@echo "... src/ParticleSystem.o"
+	@echo "... src/ParticleSystem.i"
+	@echo "... src/ParticleSystem.s"
 	@echo "... src/Simulation.o"
 	@echo "... src/Simulation.i"
 	@echo "... src/Simulation.s"

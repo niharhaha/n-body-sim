@@ -10,10 +10,11 @@
 class Particle {
 
 public:
-    Particle(float mass = UNIT_MASS, sf::Vector2f position = WINDOW_CENTER, sf::Vector2f velocity = ZERO_VELOCITY, float radius = UNIT_RADIUS, sf::Color color = DEF_COLOR);
+    Particle(float mass = UNIT_MASS, sf::Vector2f position = WINDOW_CENTER, sf::Vector2f velocity = ZERO_VEC, float radius = UNIT_RADIUS, sf::Color color = DEF_COLOR);
 
     // Getters
     float getMass() const { return mass_; }
+    float getRadius() const { return shape_.getRadius(); }
     sf::Vector2f getPosition() const { return position_; }
     sf::Vector2f getVelocity() const { return velocity_; }
 
