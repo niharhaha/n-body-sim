@@ -129,6 +129,30 @@ NBodySim/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/build
 .PHONY : NBodySim/fast
 
+src/BarnesHut.o: src/BarnesHut.cpp.o
+.PHONY : src/BarnesHut.o
+
+# target to build an object file
+src/BarnesHut.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o
+.PHONY : src/BarnesHut.cpp.o
+
+src/BarnesHut.i: src/BarnesHut.cpp.i
+.PHONY : src/BarnesHut.i
+
+# target to preprocess a source file
+src/BarnesHut.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.i
+.PHONY : src/BarnesHut.cpp.i
+
+src/BarnesHut.s: src/BarnesHut.cpp.s
+.PHONY : src/BarnesHut.s
+
+# target to generate assembly for a file
+src/BarnesHut.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.s
+.PHONY : src/BarnesHut.cpp.s
+
 src/BruteForce.o: src/BruteForce.cpp.o
 .PHONY : src/BruteForce.o
 
@@ -201,6 +225,30 @@ src/ParticleSystem.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.s
 .PHONY : src/ParticleSystem.cpp.s
 
+src/QuadTree.o: src/QuadTree.cpp.o
+.PHONY : src/QuadTree.o
+
+# target to build an object file
+src/QuadTree.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o
+.PHONY : src/QuadTree.cpp.o
+
+src/QuadTree.i: src/QuadTree.cpp.i
+.PHONY : src/QuadTree.i
+
+# target to preprocess a source file
+src/QuadTree.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/QuadTree.cpp.i
+.PHONY : src/QuadTree.cpp.i
+
+src/QuadTree.s: src/QuadTree.cpp.s
+.PHONY : src/QuadTree.s
+
+# target to generate assembly for a file
+src/QuadTree.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/QuadTree.cpp.s
+.PHONY : src/QuadTree.cpp.s
+
 src/Simulation.o: src/Simulation.cpp.o
 .PHONY : src/Simulation.o
 
@@ -258,6 +306,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... NBodySim"
+	@echo "... src/BarnesHut.o"
+	@echo "... src/BarnesHut.i"
+	@echo "... src/BarnesHut.s"
 	@echo "... src/BruteForce.o"
 	@echo "... src/BruteForce.i"
 	@echo "... src/BruteForce.s"
@@ -267,6 +318,9 @@ help:
 	@echo "... src/ParticleSystem.o"
 	@echo "... src/ParticleSystem.i"
 	@echo "... src/ParticleSystem.s"
+	@echo "... src/QuadTree.o"
+	@echo "... src/QuadTree.i"
+	@echo "... src/QuadTree.s"
 	@echo "... src/Simulation.o"
 	@echo "... src/Simulation.i"
 	@echo "... src/Simulation.s"

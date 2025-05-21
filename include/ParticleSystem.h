@@ -14,10 +14,11 @@ public:
     void addParticle(const Particle& p) { particles_.push_back(p); }
     void updateAndDraw(sf::RenderWindow& window);
     void updateAndDraw(sf::RenderWindow& window, const std::vector<sf::Vector2f>& forces);
-    const std::vector<Particle>& getParticles() const { return particles_; } 
+    std::vector<Particle>& getParticles() { return particles_; } 
 
     void createTriangularSystem(float sideLength = 100.f, float mass = UNIT_MASS, float radius = UNIT_RADIUS);
-    void createRandomSystem(float size = 100, float mass = 0, float radius = 0);
+    void createRandomSystem(float size = 100, float mass = 0, float radius = UNIT_RADIUS);
+    void createSolarSystem();
 
 private:
     std::vector<Particle> particles_;

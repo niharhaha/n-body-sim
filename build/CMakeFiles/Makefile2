@@ -85,12 +85,12 @@ clean: CMakeFiles/NBodySim.dir/clean
 CMakeFiles/NBodySim.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target NBodySim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target NBodySim"
 .PHONY : CMakeFiles/NBodySim.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/NBodySim.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/NBodySim.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles 0
 .PHONY : CMakeFiles/NBodySim.dir/rule
@@ -102,7 +102,7 @@ NBodySim: CMakeFiles/NBodySim.dir/rule
 # codegen rule for target.
 CMakeFiles/NBodySim.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Finished codegen for target NBodySim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Finished codegen for target NBodySim"
 .PHONY : CMakeFiles/NBodySim.dir/codegen
 
 # clean rule for target.

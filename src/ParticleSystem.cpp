@@ -16,7 +16,6 @@ void ParticleSystem::updateAndDraw(sf::RenderWindow &window, const std::vector<s
     // Apply forces to particles, update their position and draw them
     for (size_t i = 0; i < n; ++i) {
         sf::Vector2f force = forces[i];
-        std::cout << "Force " << i << ": (" << force.x << ", " << force.y << ")\n";
         particles_[i].applyForce(forces[i], TIME_STEP);
         particles_[i].updatePosition(TIME_STEP);
         particles_[i].draw(window);
@@ -48,15 +47,43 @@ void ParticleSystem::createRandomSystem(float size, float mass, float radius) {
 
     std::uniform_real_distribution<float> distX(0.f, WINDOW_WIDTH);
     std::uniform_real_distribution<float> distY(0.f, WINDOW_HEIGHT);
-    std::uniform_real_distribution<float> distMass(0.5f, 1000.f);   
-    std::uniform_real_distribution<float> distRadius(1.f, 14.f);  // example radius range
+    std::uniform_real_distribution<float> distMass(0.f, 1.f);   
+    float skew = 1.f; 
+    float minMass = 0.5f;
+    float maxMass = 1e14f;
+
+    std::uniform_real_distribution<float> distRadius(0.01f, 1.f);  
 
      for (int i = 0; i < size; i++) {
         sf::Vector2f pos(distX(mt), distY(mt));
+        float u = distMass(mt);       // uniform [0,1]
+        float skewed = std::pow(u, skew); // left skew
+        // Scale to range:
+        float mass = minMass + (maxMass - minMass) * skewed;
 
-        particles_.emplace_back(distMass(mt), pos, ZERO_VEC, distRadius(mt));
+        particles_.emplace_back(mass, pos, ZERO_VEC, distRadius(mt));
     }
+}
 
+void ParticleSystem::createSolarSystem() {
+    particles_.clear();
 
+    particles_.emplace_back(
+        1.989e30f * SCALE,                          // mass (Sun)
+        WINDOW_CENTER,            // position
+        sf::Vector2f(0.f, 0.f),            // velocity
+        20.f,                              // radius (for drawing)
+        sf::Color::Yellow                   // color
+    );
+
+    particles_.emplace_back(
+        5.972e24f * SCALE,
+        WINDOW_CENTER + sf::Vector2f(AU * SCALE, 0.f),
+        sf::Vector2f(0.f, 29.78e3f * SCALE),
+        10.f,
+        sf::Color::Blue
+    );
+
+    
 
 }

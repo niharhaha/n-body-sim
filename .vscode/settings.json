@@ -42,6 +42,9 @@
         "streambuf": "cpp",
         "string": "cpp",
         "string_view": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "memory": "cpp",
+        "__node_handle": "cpp",
+        "__split_buffer": "cpp"
     }
 }
