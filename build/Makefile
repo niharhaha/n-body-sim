@@ -129,6 +129,54 @@ NBodySim/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/build
 .PHONY : NBodySim/fast
 
+src/Particle.o: src/Particle.cpp.o
+.PHONY : src/Particle.o
+
+# target to build an object file
+src/Particle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Particle.cpp.o
+.PHONY : src/Particle.cpp.o
+
+src/Particle.i: src/Particle.cpp.i
+.PHONY : src/Particle.i
+
+# target to preprocess a source file
+src/Particle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Particle.cpp.i
+.PHONY : src/Particle.cpp.i
+
+src/Particle.s: src/Particle.cpp.s
+.PHONY : src/Particle.s
+
+# target to generate assembly for a file
+src/Particle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Particle.cpp.s
+.PHONY : src/Particle.cpp.s
+
+src/Simulation.o: src/Simulation.cpp.o
+.PHONY : src/Simulation.o
+
+# target to build an object file
+src/Simulation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Simulation.cpp.o
+.PHONY : src/Simulation.cpp.o
+
+src/Simulation.i: src/Simulation.cpp.i
+.PHONY : src/Simulation.i
+
+# target to preprocess a source file
+src/Simulation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Simulation.cpp.i
+.PHONY : src/Simulation.cpp.i
+
+src/Simulation.s: src/Simulation.cpp.s
+.PHONY : src/Simulation.s
+
+# target to generate assembly for a file
+src/Simulation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Simulation.cpp.s
+.PHONY : src/Simulation.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -162,6 +210,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... NBodySim"
+	@echo "... src/Particle.o"
+	@echo "... src/Particle.i"
+	@echo "... src/Particle.s"
+	@echo "... src/Simulation.o"
+	@echo "... src/Simulation.i"
+	@echo "... src/Simulation.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

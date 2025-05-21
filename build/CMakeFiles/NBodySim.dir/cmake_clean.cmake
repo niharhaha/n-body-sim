@@ -1,4 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/NBodySim.dir/src/Particle.cpp.o"
+  "CMakeFiles/NBodySim.dir/src/Particle.cpp.o.d"
+  "CMakeFiles/NBodySim.dir/src/Simulation.cpp.o"
+  "CMakeFiles/NBodySim.dir/src/Simulation.cpp.o.d"
   "CMakeFiles/NBodySim.dir/src/main.cpp.o"
   "CMakeFiles/NBodySim.dir/src/main.cpp.o.d"
   "NBodySim"
