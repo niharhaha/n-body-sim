@@ -9,7 +9,6 @@ class ParticleSystem {
 public:
     ParticleSystem() {};
     ParticleSystem(std::vector<Particle> particles) : particles_(particles) {}
-    ParticleSystem(std::vector<Particle> particles) : particles_(particles) {}
     void addParticle(float mass = UNIT_MASS, sf::Vector2f position = WINDOW_CENTER, sf::Vector2f velocity = ZERO_VEC, float radius = UNIT_RADIUS, sf::Color color = DEF_COLOR) { particles_.emplace_back(mass, position, velocity, radius, color); }
     void addParticle(const Particle& p) { particles_.push_back(p); }
     void updateAndDraw(sf::RenderWindow& window);

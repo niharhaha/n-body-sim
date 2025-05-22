@@ -15,7 +15,6 @@ void ParticleSystem::updateAndDraw(sf::RenderWindow &window, const std::vector<s
     size_t n = particles_.size();
     // Apply forces to particles, update their position and draw them
     for (size_t i = 0; i < n; ++i) {
-        sf::Vector2f force = forces[i];
         particles_[i].applyForce(forces[i], TIME_STEP);
         particles_[i].updatePosition(TIME_STEP);
         particles_[i].draw(window);
@@ -69,7 +68,7 @@ void ParticleSystem::createSolarSystem() {
     particles_.clear();
 
     particles_.emplace_back(
-        1.989e30f * SCALE,                          // mass (Sun)
+        1.989e3f * SCALE,                          // mass (Sun)
         WINDOW_CENTER,            // position
         sf::Vector2f(0.f, 0.f),            // velocity
         20.f,                              // radius (for drawing)
@@ -77,7 +76,7 @@ void ParticleSystem::createSolarSystem() {
     );
 
     particles_.emplace_back(
-        5.972e24f * SCALE,
+        5.972e2f * SCALE,
         WINDOW_CENTER + sf::Vector2f(AU * SCALE, 0.f),
         sf::Vector2f(0.f, 29.78e3f * SCALE),
         10.f,

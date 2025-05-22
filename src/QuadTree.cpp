@@ -101,31 +101,3 @@ void QuadTree::subdivide() {
     children_[2] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x, boundaryPos.y + halfHeight}, {halfWidth, halfHeight})); // SW
     children_[3] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x + halfWidth, boundaryPos.y + halfHeight}, {halfWidth, halfHeight})); // SE
 }
-
-void QuadTree::computePartialForce(QuadTree* node, const Particle& target, sf::Vector2f& result, std::mutex& mtx) {
-    sf::Vector2f partial = node->computeForceOnTarget(target);
-    std::lock_guard<std::mutex> lock(mtx);
-    result += partial;
-}
-
-sf::Vector2f QuadTree::computeForceThreaded(const Particle& target) {
-    sf::Vector2f totalForce{0.f, 0.f};
-    std::mutex force_mutex;
-    std::vector<std::thread> threads;
-    
-    for (int i = 0; i < 4; ++i) {
-        if (children_[i]) {
-            threads.emplace_back(
-                [this, i, &target, &totalForce, &force_mutex]() {
-                    computePartialForce(children_[i].get(), target, totalForce, force_mutex);
-                }
-            );
-        }
-    }
-    
-    for (auto& t : threads) {
-        t.join();
-    }
-    
-    return totalForce;
-}

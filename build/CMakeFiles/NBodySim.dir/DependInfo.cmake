@@ -13,7 +13,6 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/nihar/Desktop/Projects/n-body-sim/src/Particle.cpp" "CMakeFiles/NBodySim.dir/src/Particle.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/Particle.cpp.o.d"
   "/Users/nihar/Desktop/Projects/n-body-sim/src/ParticleSystem.cpp" "CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o.d"
   "/Users/nihar/Desktop/Projects/n-body-sim/src/QuadTree.cpp" "CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o.d"
-  "/Users/nihar/Desktop/Projects/n-body-sim/src/Simulation.cpp" "CMakeFiles/NBodySim.dir/src/Simulation.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/Simulation.cpp.o.d"
   "/Users/nihar/Desktop/Projects/n-body-sim/src/main.cpp" "CMakeFiles/NBodySim.dir/src/main.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/main.cpp.o.d"
   )
 

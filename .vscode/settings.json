@@ -46,6 +46,10 @@
         "memory": "cpp",
         "__node_handle": "cpp",
         "__split_buffer": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "__hash_table": "cpp",
+        "array": "cpp",
+        "charconv": "cpp",
+        "unordered_map": "cpp"
     }
 }
