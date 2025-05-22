@@ -930,6 +930,7 @@ CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o
  /Users/nihar/Desktop/Projects/n-body-sim/include/Particle.h
  /Users/nihar/Desktop/Projects/n-body-sim/include/ParticleSystem.h
  /Users/nihar/Desktop/Projects/n-body-sim/include/QuadTree.h
+ /Users/nihar/Desktop/Projects/n-body-sim/include/Simulation.h
  /Users/nihar/Desktop/Projects/n-body-sim/include/ThreadPool.h
  /opt/homebrew/opt/sfml/include/SFML/Config.hpp
  /opt/homebrew/opt/sfml/include/SFML/Graphics.hpp
@@ -1919,6 +1920,7 @@ CMakeFiles/NBodySim.dir/src/Forces.cpp.o
  /Users/nihar/Desktop/Projects/n-body-sim/include/Constants.h
  /Users/nihar/Desktop/Projects/n-body-sim/include/Forces.h
  /Users/nihar/Desktop/Projects/n-body-sim/include/Particle.h
+ /Users/nihar/Desktop/Projects/n-body-sim/include/ParticleSystem.h
  /Users/nihar/Desktop/Projects/n-body-sim/include/QuadTree.h
  /Users/nihar/Desktop/Projects/n-body-sim/include/ThreadPool.h
  /opt/homebrew/opt/sfml/include/SFML/Config.hpp

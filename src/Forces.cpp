@@ -17,7 +17,10 @@ void computeBruteForces(const std::vector<Particle> &particles, std::vector<sf::
     }
 }
 
-void computeBarnesHutForces(const std::vector<Particle> &particles, std::vector<sf::Vector2f>& forces) {
+void computeBarnesHutForces(ParticleSystem& ps) {
+    const std::vector<Particle> &particles = ps.getParticles();
+    std::vector<sf::Vector2f>& forces = ps.getForces();
+
     size_t n = particles.size();
     // sf::Clock timer;
     QuadTree quadTree(particles);
@@ -41,7 +44,10 @@ void computeBarnesHutForces(const std::vector<Particle> &particles, std::vector<
 }
 
 
-void computeThreadPoolBarnesHutForces(const std::vector<Particle> &particles, std::vector<sf::Vector2f>& forces, ThreadPool& pool) {
+void computeThreadPoolBarnesHutForces(ParticleSystem& ps, ThreadPool& pool) {
+    const std::vector<Particle> &particles = ps.getParticles();
+    std::vector<sf::Vector2f>& forces = ps.getForces();
+
     size_t n = particles.size();
 
     int numThreads = std::thread::hardware_concurrency();

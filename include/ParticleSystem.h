@@ -15,6 +15,7 @@ public:
     void updateAndDraw(sf::RenderWindow& window);
     std::vector<Particle>& getParticles() { return particles_; } 
     std::vector<sf::Vector2f>& getForces() { return forces_; } 
+    int getSize() { return particles_.size(); } 
 
     void createTriangularSystem(float sideLength = 100.f, float mass = UNIT_MASS, float radius = UNIT_RADIUS);
     void createRandomSystem(float size = 100, float mass = 0, float radius = UNIT_RADIUS);

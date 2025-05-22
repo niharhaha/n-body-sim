@@ -6,9 +6,15 @@
 #include "Forces.h"
 #include <iostream>
 
-void benchmarkBarnesHut(int size = 100000, int iters = 2000);
+void benchmarkBarnesHut(int size = 1000, int iters = 1000);
+void benchmarkThreadedBarnesHut(int size = 1000, int iters = 2000);
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc == 1) {
+        benchmarkThreadedBarnesHut();
+    }
+    
+    
     benchmarkBarnesHut();
     return 0;
 }
