@@ -7,12 +7,12 @@
 #include "QuadTree.h"
 
 // The O(n^2) algorithm 
-std::vector<sf::Vector2f> computeBruteForces(const std::vector<Particle>& particles);
+void computeBruteForces(const std::vector<Particle>& particles, std::vector<sf::Vector2f>& forces);
 
 // Barnes Hut O(nlogn) (approximation) algorithm
-std::vector<sf::Vector2f> computeBarnesHutForces(const std::vector<Particle>& particles);
+void computeBarnesHutForces(const std::vector<Particle>& particles, std::vector<sf::Vector2f>& forces);
 
 // Barnes Hut O(nlogn) (approximation) algorithm w/ Threading
-std::vector<sf::Vector2f> computeThreadedBarnesHutForces(const std::vector<Particle>& particles);
+void computeThreadPoolBarnesHutForces(const std::vector<Particle>& particles, std::vector<sf::Vector2f>& forces, ThreadPool& pool);
 
 #endif 

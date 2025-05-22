@@ -6,9 +6,9 @@
 #include "Forces.h"
 #include <iostream>
 
-void benchmarkBarnesHut(int size = 10000, int iters = 2000);
+void benchmarkBarnesHut(int size = 100000, int iters = 2000);
 
 int main() {
-    benchmarkBarnesHut(10000, 1000);
+    benchmarkBarnesHut();
     return 0;
 }

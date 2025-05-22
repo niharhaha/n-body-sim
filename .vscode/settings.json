@@ -50,6 +50,10 @@
         "__hash_table": "cpp",
         "array": "cpp",
         "charconv": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "queue": "cpp",
+        "thread": "cpp",
+        "deque": "cpp",
+        "future": "cpp"
     }
 }

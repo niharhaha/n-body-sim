@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o.d"
   "CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o"
   "CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o.d"
+  "CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o"
+  "CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o.d"
   "CMakeFiles/NBodySim.dir/src/main.cpp.o"
   "CMakeFiles/NBodySim.dir/src/main.cpp.o.d"
   "NBodySim"

@@ -2,13 +2,54 @@
 #include <vector>
 #include <thread>
 #include <mutex>
-
+#include <iostream>
 QuadTree::QuadTree(const std::vector<Particle>& particles, const sf::FloatRect& boundary) : boundary_(boundary) {
     Particle p(0);
     particle_ = &p;
+
     for (auto& particle : particles) {
         insertParticle(particle);
     }
+}
+
+QuadTree::QuadTree(ThreadPool& pool, const std::vector<Particle>& particles, const sf::FloatRect& boundary) : boundary_(boundary) {
+    subdivide();
+
+    sf::Vector2f boundaryPos = boundary.position;
+    sf::Vector2f boundarySize = boundary.size;
+    std::vector<Particle> quadrants[4];
+
+    for (auto& p : particles) {
+        sf::Vector2f pointPos = p.getPosition();
+        int q = -1;
+        if (boundaryPos.x <= pointPos.x && pointPos.x < boundaryPos.x + boundarySize.x / 2) {
+            if (boundaryPos.y <= pointPos.y && pointPos.y < boundaryPos.y + boundarySize.y / 2) {
+                q = 1;
+            } else if (boundaryPos.y + boundarySize.y / 2 <= pointPos.y && pointPos.y < boundaryPos.y + boundarySize.y) {
+                q = 2;
+            }
+        } else if (boundaryPos.x + boundarySize.x / 2 <= pointPos.x && pointPos.x < boundaryPos.x + boundarySize.x) {
+            if (boundaryPos.y <= pointPos.y && pointPos.y < boundaryPos.y + boundarySize.y / 2) {
+                q = 0;
+            } else if (boundaryPos.y + boundarySize.y / 2 <= pointPos.y && pointPos.y < boundaryPos.y + boundarySize.y) {
+                q = 3;
+            }
+        }
+        if (q != -1) { quadrants[q].push_back(p); }
+    }
+
+    // std::array<std::future<void>, 4> futures;
+    for (int q = 0; q < 4; q++) {
+        auto childPtr = children_[q].get();
+        auto* bucket = &quadrants[q];
+        pool.enqueue([childPtr, bucket] {
+            for (auto& p : *bucket) {
+                childPtr->insertParticle(p);
+            }
+        });
+    }
+
+    // for (auto& f : futures) { f.get(); }
 }
 
 bool QuadTree::insertParticle(const Particle &p) {
@@ -29,6 +70,7 @@ bool QuadTree::insertParticle(const Particle &p) {
     
     return true;
 }
+
 
 sf::Vector2f QuadTree::computeForceOnTarget(const Particle &target) {
     // if (!containsPoint(SCREEN, target.getPosition())) { return {0.f, 0.f}; }

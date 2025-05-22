@@ -7,18 +7,19 @@
 #include <memory>
 #include "Constants.h"
 #include <cmath>
+#include "ThreadPool.h"
+
 
 class QuadTree {
 public:
     QuadTree(const sf::FloatRect& boundary = SCREEN) : boundary_(boundary), particle_(0) {};
     QuadTree(const std::vector<Particle>& particles, const sf::FloatRect& boundary = SCREEN);
+    QuadTree(ThreadPool& pool, const std::vector<Particle>& particles, const sf::FloatRect& boundary = SCREEN);
     bool insertParticle(const Particle& p);
     bool isLeaf() const { return !subdivided_; }
 
     sf::Vector2f computeForceOnTarget(const Particle& target);
     void updateMassDistribution();
-    sf::Vector2f computeForceThreaded(const Particle& target);
-    void computePartialForce(QuadTree* node, const Particle& target, sf::Vector2f& result, std::mutex& mtx);
 
 private:
     sf::FloatRect boundary_;  // Region covered by this node

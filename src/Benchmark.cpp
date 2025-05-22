@@ -2,6 +2,7 @@
 #include "Forces.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>   // For sf::RenderWindow, sf::Text, sf::Font, sf::Color
+#include "ThreadPool.h"
 
 void benchmarkBarnesHut(int size = 10000, int iters = 5000) {
     sf::RenderWindow window(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "N-Body Gravity Simulation (Barnes Hut)");
@@ -20,7 +21,7 @@ void benchmarkBarnesHut(int size = 10000, int iters = 5000) {
     iterText.setStyle(sf::Text::Bold);
     iterText.setFillColor(sf::Color::White);
  
-
+    ThreadPool pool;
     for (int i = 0; i < iters; i++) {
         std::optional<sf::Event> eventOpt = window.pollEvent();
         while (eventOpt.has_value()) {
@@ -30,9 +31,9 @@ void benchmarkBarnesHut(int size = 10000, int iters = 5000) {
         }
         window.clear(sf::Color::Black);
         sf::Clock clock;
-        auto forces = computeThreadedBarnesHutForces(ps.getParticles());
+        computeThreadPoolBarnesHutForces(ps.getParticles(), ps.getForces(), pool);
         totalTime += clock.getElapsedTime().asMilliseconds(); 
-        ps.updateAndDraw(window, forces);
+        ps.updateAndDraw(window);
 
         iterText.setString("Iteration: " + std::to_string(i));
         window.draw(iterText);
