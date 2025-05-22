@@ -72,33 +72,33 @@ include CMakeFiles/NBodySim.dir/flags.make
 CMakeFiles/NBodySim.dir/codegen:
 .PHONY : CMakeFiles/NBodySim.dir/codegen
 
-CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o: CMakeFiles/NBodySim.dir/flags.make
-CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/BarnesHut.cpp
-CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o -MF CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o.d -o CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/BarnesHut.cpp
+CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o: CMakeFiles/NBodySim.dir/flags.make
+CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/Benchmark.cpp
+CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o -MF CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o.d -o CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/Benchmark.cpp
 
-CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nihar/Desktop/Projects/n-body-sim/src/BarnesHut.cpp > CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.i
+CMakeFiles/NBodySim.dir/src/Benchmark.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/NBodySim.dir/src/Benchmark.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nihar/Desktop/Projects/n-body-sim/src/Benchmark.cpp > CMakeFiles/NBodySim.dir/src/Benchmark.cpp.i
 
-CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nihar/Desktop/Projects/n-body-sim/src/BarnesHut.cpp -o CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.s
+CMakeFiles/NBodySim.dir/src/Benchmark.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/NBodySim.dir/src/Benchmark.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nihar/Desktop/Projects/n-body-sim/src/Benchmark.cpp -o CMakeFiles/NBodySim.dir/src/Benchmark.cpp.s
 
-CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o: CMakeFiles/NBodySim.dir/flags.make
-CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/BruteForce.cpp
-CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o -MF CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o.d -o CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/BruteForce.cpp
+CMakeFiles/NBodySim.dir/src/Forces.cpp.o: CMakeFiles/NBodySim.dir/flags.make
+CMakeFiles/NBodySim.dir/src/Forces.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/Forces.cpp
+CMakeFiles/NBodySim.dir/src/Forces.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/NBodySim.dir/src/Forces.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/Forces.cpp.o -MF CMakeFiles/NBodySim.dir/src/Forces.cpp.o.d -o CMakeFiles/NBodySim.dir/src/Forces.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/Forces.cpp
 
-CMakeFiles/NBodySim.dir/src/BruteForce.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/NBodySim.dir/src/BruteForce.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nihar/Desktop/Projects/n-body-sim/src/BruteForce.cpp > CMakeFiles/NBodySim.dir/src/BruteForce.cpp.i
+CMakeFiles/NBodySim.dir/src/Forces.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/NBodySim.dir/src/Forces.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nihar/Desktop/Projects/n-body-sim/src/Forces.cpp > CMakeFiles/NBodySim.dir/src/Forces.cpp.i
 
-CMakeFiles/NBodySim.dir/src/BruteForce.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/NBodySim.dir/src/BruteForce.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nihar/Desktop/Projects/n-body-sim/src/BruteForce.cpp -o CMakeFiles/NBodySim.dir/src/BruteForce.cpp.s
+CMakeFiles/NBodySim.dir/src/Forces.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/NBodySim.dir/src/Forces.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nihar/Desktop/Projects/n-body-sim/src/Forces.cpp -o CMakeFiles/NBodySim.dir/src/Forces.cpp.s
 
 CMakeFiles/NBodySim.dir/src/Particle.cpp.o: CMakeFiles/NBodySim.dir/flags.make
 CMakeFiles/NBodySim.dir/src/Particle.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/Particle.cpp
@@ -172,8 +172,8 @@ CMakeFiles/NBodySim.dir/src/main.cpp.s: cmake_force
 
 # Object files for target NBodySim
 NBodySim_OBJECTS = \
-"CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o" \
-"CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o" \
+"CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o" \
+"CMakeFiles/NBodySim.dir/src/Forces.cpp.o" \
 "CMakeFiles/NBodySim.dir/src/Particle.cpp.o" \
 "CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o" \
 "CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o" \
@@ -183,8 +183,8 @@ NBodySim_OBJECTS = \
 # External object files for target NBodySim
 NBodySim_EXTERNAL_OBJECTS =
 
-NBodySim: CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o
-NBodySim: CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o
+NBodySim: CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o
+NBodySim: CMakeFiles/NBodySim.dir/src/Forces.cpp.o
 NBodySim: CMakeFiles/NBodySim.dir/src/Particle.cpp.o
 NBodySim: CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o
 NBodySim: CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o

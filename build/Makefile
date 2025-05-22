@@ -129,53 +129,53 @@ NBodySim/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/build
 .PHONY : NBodySim/fast
 
-src/BarnesHut.o: src/BarnesHut.cpp.o
-.PHONY : src/BarnesHut.o
+src/Benchmark.o: src/Benchmark.cpp.o
+.PHONY : src/Benchmark.o
 
 # target to build an object file
-src/BarnesHut.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o
-.PHONY : src/BarnesHut.cpp.o
+src/Benchmark.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o
+.PHONY : src/Benchmark.cpp.o
 
-src/BarnesHut.i: src/BarnesHut.cpp.i
-.PHONY : src/BarnesHut.i
+src/Benchmark.i: src/Benchmark.cpp.i
+.PHONY : src/Benchmark.i
 
 # target to preprocess a source file
-src/BarnesHut.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.i
-.PHONY : src/BarnesHut.cpp.i
+src/Benchmark.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Benchmark.cpp.i
+.PHONY : src/Benchmark.cpp.i
 
-src/BarnesHut.s: src/BarnesHut.cpp.s
-.PHONY : src/BarnesHut.s
+src/Benchmark.s: src/Benchmark.cpp.s
+.PHONY : src/Benchmark.s
 
 # target to generate assembly for a file
-src/BarnesHut.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.s
-.PHONY : src/BarnesHut.cpp.s
+src/Benchmark.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Benchmark.cpp.s
+.PHONY : src/Benchmark.cpp.s
 
-src/BruteForce.o: src/BruteForce.cpp.o
-.PHONY : src/BruteForce.o
+src/Forces.o: src/Forces.cpp.o
+.PHONY : src/Forces.o
 
 # target to build an object file
-src/BruteForce.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o
-.PHONY : src/BruteForce.cpp.o
+src/Forces.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Forces.cpp.o
+.PHONY : src/Forces.cpp.o
 
-src/BruteForce.i: src/BruteForce.cpp.i
-.PHONY : src/BruteForce.i
+src/Forces.i: src/Forces.cpp.i
+.PHONY : src/Forces.i
 
 # target to preprocess a source file
-src/BruteForce.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BruteForce.cpp.i
-.PHONY : src/BruteForce.cpp.i
+src/Forces.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Forces.cpp.i
+.PHONY : src/Forces.cpp.i
 
-src/BruteForce.s: src/BruteForce.cpp.s
-.PHONY : src/BruteForce.s
+src/Forces.s: src/Forces.cpp.s
+.PHONY : src/Forces.s
 
 # target to generate assembly for a file
-src/BruteForce.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/BruteForce.cpp.s
-.PHONY : src/BruteForce.cpp.s
+src/Forces.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Forces.cpp.s
+.PHONY : src/Forces.cpp.s
 
 src/Particle.o: src/Particle.cpp.o
 .PHONY : src/Particle.o
@@ -306,12 +306,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... NBodySim"
-	@echo "... src/BarnesHut.o"
-	@echo "... src/BarnesHut.i"
-	@echo "... src/BarnesHut.s"
-	@echo "... src/BruteForce.o"
-	@echo "... src/BruteForce.i"
-	@echo "... src/BruteForce.s"
+	@echo "... src/Benchmark.o"
+	@echo "... src/Benchmark.i"
+	@echo "... src/Benchmark.s"
+	@echo "... src/Forces.o"
+	@echo "... src/Forces.i"
+	@echo "... src/Forces.s"
 	@echo "... src/Particle.o"
 	@echo "... src/Particle.i"
 	@echo "... src/Particle.s"

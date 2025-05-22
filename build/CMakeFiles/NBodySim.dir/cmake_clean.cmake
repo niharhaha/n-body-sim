@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o"
-  "CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o.d"
-  "CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o"
-  "CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o.d"
+  "CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o"
+  "CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o.d"
+  "CMakeFiles/NBodySim.dir/src/Forces.cpp.o"
+  "CMakeFiles/NBodySim.dir/src/Forces.cpp.o.d"
   "CMakeFiles/NBodySim.dir/src/Particle.cpp.o"
   "CMakeFiles/NBodySim.dir/src/Particle.cpp.o.d"
   "CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o"

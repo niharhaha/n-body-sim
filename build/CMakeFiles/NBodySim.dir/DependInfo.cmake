@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/nihar/Desktop/Projects/n-body-sim/src/BarnesHut.cpp" "CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/BarnesHut.cpp.o.d"
-  "/Users/nihar/Desktop/Projects/n-body-sim/src/BruteForce.cpp" "CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/BruteForce.cpp.o.d"
+  "/Users/nihar/Desktop/Projects/n-body-sim/src/Benchmark.cpp" "CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o.d"
+  "/Users/nihar/Desktop/Projects/n-body-sim/src/Forces.cpp" "CMakeFiles/NBodySim.dir/src/Forces.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/Forces.cpp.o.d"
   "/Users/nihar/Desktop/Projects/n-body-sim/src/Particle.cpp" "CMakeFiles/NBodySim.dir/src/Particle.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/Particle.cpp.o.d"
   "/Users/nihar/Desktop/Projects/n-body-sim/src/ParticleSystem.cpp" "CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o.d"
   "/Users/nihar/Desktop/Projects/n-body-sim/src/QuadTree.cpp" "CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o" "gcc" "CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o.d"

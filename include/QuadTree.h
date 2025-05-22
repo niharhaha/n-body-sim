@@ -17,10 +17,12 @@ public:
 
     sf::Vector2f computeForceOnTarget(const Particle& target);
     void updateMassDistribution();
+    sf::Vector2f computeForceThreaded(const Particle& target);
+    void computePartialForce(QuadTree* node, const Particle& target, sf::Vector2f& result, std::mutex& mtx);
 
 private:
     sf::FloatRect boundary_;  // Region covered by this node
-    Particle particle_;      // Stores a particle for leaf nodes
+    Particle* particle_ = nullptr;      // Stores a particle for leaf nodes
     bool hasParticle_ = false;
 
     std::unique_ptr<QuadTree> children_[4];  // Children quadtrees 1: NE, 2: NW, 3: SW, 4: SE

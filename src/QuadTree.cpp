@@ -1,6 +1,11 @@
 #include "QuadTree.h"
+#include <vector>
+#include <thread>
+#include <mutex>
 
-QuadTree::QuadTree(const std::vector<Particle>& particles, const sf::FloatRect& boundary) : boundary_(boundary), particle_(0) {
+QuadTree::QuadTree(const std::vector<Particle>& particles, const sf::FloatRect& boundary) : boundary_(boundary) {
+    Particle p(0);
+    particle_ = &p;
     for (auto& particle : particles) {
         insertParticle(particle);
     }
@@ -10,12 +15,12 @@ bool QuadTree::insertParticle(const Particle &p) {
     if (!containsPoint(boundary_, p.getPosition())) { return false; }
 
     if (!subdivided_ && !hasParticle_) {
-        particle_ = p;
+        particle_ = const_cast<Particle*>(&p);
         hasParticle_ = true;
     } else {
         if (!subdivided_) {
             subdivide();
-            for (auto& child : children_) { if (child->insertParticle(particle_)) { break; } }
+            for (auto& child : children_) { if (child->insertParticle(*particle_)) { break; } }
             hasParticle_ = false;
         }
 
@@ -26,39 +31,43 @@ bool QuadTree::insertParticle(const Particle &p) {
 }
 
 sf::Vector2f QuadTree::computeForceOnTarget(const Particle &target) {
+    // if (!containsPoint(SCREEN, target.getPosition())) { return {0.f, 0.f}; }
+    if (totalMass_ == 0.f) { return {0.f, 0.f}; }
+    if (particle_ && particle_ == &target) { return {0.f, 0.f}; }
 
-    if (!subdivided_) {
-        return Particle::computeForce(target, particle_);
+    if (!subdivided_ && particle_) {
+        return Particle::computeForce(target, *particle_);
     } else {
         sf::Vector2f dir = centerOfMass_ - target.getPosition();
         float distSq = dir.x * dir.x + dir.y * dir.y; 
+        if (distSq < EPSILON) { return {0.f, 0.f}; }
         float dist = std::sqrt(distSq);
-        if (dist == 0) { dist = 1e-5f; distSq = dist * dist; }
+        
         float ratio = std::max(boundary_.size.x, boundary_.size.y) / dist;
 
         if (ratio < THETA) {
-            float forceMag = G * target.getMass() * totalMass_ / distSq;
-            return forceMag * (dir / dist);
+            return G * target.getMass() * totalMass_ / distSq * (dir / dist);
         } else {
             sf::Vector2f force = {0.f, 0.f};
-            for (auto& child : children_) {
-                if (child) {
-                    force += child->computeForceOnTarget(target);
+            for (int i = 0; i < 4; ++i) {
+                if (children_[i]) {
+                    force += children_[i]->computeForceOnTarget(target);
                 }
-                
             }
+
             return force;
         }
 
     }
+    
     return {0.f, 0.f};
 }
 
 void QuadTree::updateMassDistribution() {
     if (isLeaf()) {
         if (hasParticle_) {
-            totalMass_ = particle_.getMass();
-            centerOfMass_ = particle_.getPosition();
+            totalMass_ = particle_->getMass();
+            centerOfMass_ = particle_->getPosition();
         }
         return;
     }
@@ -91,4 +100,32 @@ void QuadTree::subdivide() {
     children_[1] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x, boundaryPos.y}, {halfWidth, halfHeight})); // NW
     children_[2] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x, boundaryPos.y + halfHeight}, {halfWidth, halfHeight})); // SW
     children_[3] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x + halfWidth, boundaryPos.y + halfHeight}, {halfWidth, halfHeight})); // SE
+}
+
+void QuadTree::computePartialForce(QuadTree* node, const Particle& target, sf::Vector2f& result, std::mutex& mtx) {
+    sf::Vector2f partial = node->computeForceOnTarget(target);
+    std::lock_guard<std::mutex> lock(mtx);
+    result += partial;
+}
+
+sf::Vector2f QuadTree::computeForceThreaded(const Particle& target) {
+    sf::Vector2f totalForce{0.f, 0.f};
+    std::mutex force_mutex;
+    std::vector<std::thread> threads;
+    
+    for (int i = 0; i < 4; ++i) {
+        if (children_[i]) {
+            threads.emplace_back(
+                [this, i, &target, &totalForce, &force_mutex]() {
+                    computePartialForce(children_[i].get(), target, totalForce, force_mutex);
+                }
+            );
+        }
+    }
+    
+    for (auto& t : threads) {
+        t.join();
+    }
+    
+    return totalForce;
 }

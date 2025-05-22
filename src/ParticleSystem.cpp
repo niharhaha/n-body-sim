@@ -48,11 +48,11 @@ void ParticleSystem::createRandomSystem(float size, float mass, float radius) {
     std::uniform_real_distribution<float> distX(0.f, WINDOW_WIDTH);
     std::uniform_real_distribution<float> distY(0.f, WINDOW_HEIGHT);
     std::uniform_real_distribution<float> distMass(0.f, 1.f);   
-    float skew = 1.f; 
+    float skew = 14.f; 
     float minMass = 0.5f;
     float maxMass = 1e14f;
 
-    std::uniform_real_distribution<float> distRadius(0.01f, 1.f);  
+    std::uniform_real_distribution<float> distRadius(0.1f, 5.f);  
 
      for (int i = 0; i < size; i++) {
         sf::Vector2f pos(distX(mt), distY(mt));
@@ -83,7 +83,4 @@ void ParticleSystem::createSolarSystem() {
         10.f,
         sf::Color::Blue
     );
-
-    
-
 }
