@@ -74,7 +74,7 @@ void createSimulation(int n, std::string algoName, ParticleSystem& ps, Func forc
 
         if (!loopCondition(iter, globalClock)) {
             
-            std::vector<std::string> results = footer(n, iter, totalTime, globalClock);
+            std::vector<std::string> results = footer(n, iter - 1, totalTime, globalClock);
             drawResultText(window, font, results[0], headingTextSize, WINDOW_HEADING_TEXT_CENTER);
             drawResultText(window, font, results[1], resultTextSize, WINDOW_RESULT_TEXT_CENTER);
             drawResultText(window, font, results[2], resultTextSize, WINDOW_RESULT2_TEXT_CENTER);
@@ -112,7 +112,7 @@ void createIterSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args
             results.push_back(oss1.str());
 
             std::ostringstream oss2;
-            oss2 << "No. of iterations: " << iters - 1;
+            oss2 << "No. of iterations: " << iters;
             results.push_back(oss2.str());
 
             std::ostringstream oss3;
@@ -120,7 +120,7 @@ void createIterSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args
             results.push_back(oss3.str());
 
             std::ostringstream oss4;
-            oss4 << "Average time per iteration: " << (totalTime / iters) << " ms/step)";
+            oss4 << "Average time per iteration: " << (totalTime / iters) << " ms/step";
             results.push_back(oss4.str());
             
             return results;

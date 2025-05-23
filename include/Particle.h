@@ -32,7 +32,7 @@ public:
     void applyForce(const sf::Vector2f& force, float dt) { velocity_ += (force / mass_) * dt; }
 
     // Draw to a SFML window
-    void draw(sf::RenderWindow& window) const { window.draw(shape_); }
+    void draw(sf::RenderWindow& window) const { if (SCREEN.contains(shape_.getPosition())) window.draw(shape_); }
 
     // Compute Force exerted by p2 on p1
     static inline sf::Vector2f computeForce(const Particle& p1, const Particle& p2) {

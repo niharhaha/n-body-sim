@@ -10,7 +10,7 @@ template <typename Simulator, typename Func, typename... Args>
 void benchmark(Simulator simRunner, Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int simStat, std::string algoName) {
     ParticleSystem ps;
     ps.createRandomSystem(totalSize - largeBodyCount - 1);   
-    ps.createRandomSystem(largeBodyCount, 1e16f, 1e17f, 7.f, 10.f, 15.f);  
+    ps.createRandomSystem(largeBodyCount - 1, 1e16f, 1e17f, 7.f, 10.f, 15.f);  
     if (largeBodyCount > 0) { ps.createRandomSystem(1, 1e18f, 1e21f, 14.f, 20.f, 25.f); } 
 
     simRunner(ps, [forceComputor, &args...](ParticleSystem& ps_ref) { forceComputor(ps_ref, std::forward<Args>(args)...); }, simStat, algoName);
