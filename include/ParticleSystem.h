@@ -18,8 +18,9 @@ public:
     int getSize() { return particles_.size(); } 
 
     void createTriangularSystem(float sideLength = 100.f, float mass = UNIT_MASS, float radius = UNIT_RADIUS);
-    void createRandomSystem(float size = 100, float mass = 0, float radius = UNIT_RADIUS);
+    void createRandomSystem(float size = 100, float minMass = 0.1f,float maxMass = 1e14f, float massSkew = 14.f, float minRadius = 0.05f, float maxRadius = 5.f);
     void createSolarSystem();
+    void clearSystem() { particles_.clear(); forces_.clear(); };
 
 private:
     std::vector<Particle> particles_;

@@ -5,7 +5,10 @@
 #include <future>
 #include "ThreadPool.h"
 
-void computeBruteForces(const std::vector<Particle> &particles, std::vector<sf::Vector2f>& forces) {
+void computeBruteForces(ParticleSystem& ps) {
+    const std::vector<Particle> &particles = ps.getParticles();
+    std::vector<sf::Vector2f>& forces = ps.getForces();
+
     size_t n = particles.size();
 
     for (int i = 0; i < n; i++) {

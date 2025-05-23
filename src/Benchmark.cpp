@@ -1,25 +1,54 @@
 #include "ParticleSystem.h"
 #include "Forces.h"
 #include <iostream>
-#include <SFML/Graphics.hpp>   // For sf::RenderWindow, sf::Text, sf::Font, sf::Color
+#include <SFML/Graphics.hpp>
 #include "ThreadPool.h"
 #include "Simulation.h"
 
-void benchmarkThreadedBarnesHut(int size = 10000, int iters = 2500) {
-    ParticleSystem ps;
-    ps.createRandomSystem(size);   
-    // ps.addParticle(1e18f, {500, 500}, {-5, -15}, 15, {180, 14, 77});
-    ps.addParticle(1e18f, {200, 500}, {-5, -15}, 15, {180, 14, 77});
-    ThreadPool pool;
 
-    createIterSimulation(ps, [&pool](ParticleSystem& ps_ref) { computeThreadPoolBarnesHutForces(ps_ref, pool); }, iters);
+template <typename Simulator, typename Func, typename... Args>
+void benchmark(Simulator simRunner, Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int simStat) {
+    ParticleSystem ps;
+    ps.createRandomSystem(totalSize - largeBodyCount);   
+    ps.createRandomSystem(largeBodyCount, 1e15f, 1e17f, 2.f, 10.f, 15.f);   
+
+    simRunner(ps, [forceComputor, &args...](ParticleSystem& ps_ref) { forceComputor(ps_ref, std::forward<Args>(args)...); }, simStat);
 }
 
-void benchmarkBarnesHut(int size = 100000, int iters = 5000) {
-    ParticleSystem ps;
-    ps.createRandomSystem(size);   
-    // ps.addParticle(1e18f, {500, 500}, {-5, -15}, 15, {180, 14, 77});
-    ps.addParticle(1e18f, {200, 500}, {-5, -15}, 15, {180, 14, 77});
+template <typename Func, typename... Args>
+void benchmarkByIters(Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int iters) {
+    benchmark([](ParticleSystem& ps, auto&& func, int iters) { createIterSimulation(ps, std::forward<decltype(func)>(func), iters);},
+    forceComputor, args..., totalSize, largeBodyCount, iters);
+}
 
-    createTimeSimulation(ps, [](ParticleSystem& ps_ref) { computeBarnesHutForces(ps_ref); }, iters);
+template <typename Func, typename... Args>
+void benchmarkByTime(Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int time) {
+    benchmark([](ParticleSystem& ps, auto&& func, int time) { createTimeSimulation(ps, std::forward<decltype(func)>(func), time);},
+    forceComputor, args..., totalSize, largeBodyCount, time);
+}
+
+void benchmarkThreadedBarnesHutByIters(int totalSize, int largeBodyCount, int iters) {
+    ThreadPool pool;
+    benchmarkByIters([&pool](ParticleSystem& ps_ref) { computeThreadPoolBarnesHutForces(ps_ref, pool); }, totalSize, largeBodyCount, iters);
+}
+
+void benchmarkBarnesHutByIters(int totalSize, int largeBodyCount, int iters) {
+    benchmarkByIters([](ParticleSystem& ps_ref) { computeBarnesHutForces(ps_ref); }, totalSize, largeBodyCount, iters);
+}
+
+void benchmarkBruteForceByIters(int totalSize, int largeBodyCount, int iters) {
+    benchmarkByIters([](ParticleSystem& ps_ref) { computeBruteForces(ps_ref); }, totalSize, largeBodyCount, iters);
+}
+
+void benchmarkThreadedBarnesHutByTime(int totalSize, int largeBodyCount, int time) {
+    ThreadPool pool;
+    benchmarkByIters([&pool](ParticleSystem& ps_ref) { computeThreadPoolBarnesHutForces(ps_ref, pool); }, totalSize, largeBodyCount, time);
+}
+
+void benchmarkBarnesHutByTime(int totalSize, int largeBodyCount, int time) {
+    benchmarkByIters([](ParticleSystem& ps_ref) { computeBarnesHutForces(ps_ref); }, totalSize, largeBodyCount, time);
+}
+
+void benchmarkBruteForceByTime(int totalSize, int largeBodyCount, int time) {
+    benchmarkByIters([](ParticleSystem& ps_ref) { computeBruteForces(ps_ref); }, totalSize, largeBodyCount, time);
 }

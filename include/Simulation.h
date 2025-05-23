@@ -1,28 +1,26 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
+#include "Constants.h"
 
 template <typename LoopCondition, typename FooterPrinter, typename Func, typename... Args>
 void createSimulation(int n, ParticleSystem& ps, Func forceComputor, LoopCondition&& loopCondition, FooterPrinter&& footer, Args&&... args) {
-    sf::RenderWindow window(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "N-Body Gravity Simulation (Barnes Hut)");
-    float totalTime = 0.0f;
+    sf::RenderWindow window(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "N-Body Gravity Simulation");
     const sf::Font font("assets/times.ttf");
 
-    sf::Text iterText(font, "hello");
-    iterText.setCharacterSize(14);
-    iterText.setStyle(sf::Text::Bold);
-    iterText.setFillColor(sf::Color::White);
+    float totalTime = 0.0f;
+    sf::Clock globalClock;
 
-    sf::Text timeText(font, "hello");
-    timeText.setCharacterSize(14);
+    sf::Text iterText(font, "", 14);
+    iterText.setStyle(sf::Text::Bold);
+
+    sf::Text timeText(font, "", 14);
     sf::Vector2f timePos = {0, 20};
     timePos += iterText.getPosition();
     timeText.setPosition(timePos);
     timeText.setStyle(sf::Text::Bold);
-    timeText.setFillColor(sf::Color::White);
 
     int iter = 1;
-    sf::Clock globalClock;
-
+    
     while (true) {
         iter++;
         std::optional<sf::Event> eventOpt = window.pollEvent();
@@ -78,6 +76,7 @@ void createSimulation(int n, ParticleSystem& ps, Func forceComputor, LoopConditi
         }
     }
 }
+
 template <typename Func, typename... Args>
 void createIterSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args, int iters = 0) {
     createSimulation(

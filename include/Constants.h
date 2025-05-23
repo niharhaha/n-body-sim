@@ -10,7 +10,7 @@ inline constexpr int WINDOW_WIDTH = 700.0f;
 inline constexpr int WINDOW_HEIGHT = 700.0f;
 inline constexpr float UNIT_MASS = 1e10f; // In kilograms
 inline constexpr float THETA = 0.5f;  // Barnes-Hut theta threshold
-inline constexpr float EPSILON = 1e-6f; 
+inline constexpr float EPSILON = 1e-4f; 
 const float AU = 1.496e11f;   // Astronomical Unit in meters (distance Earth-Sun)
 const float SCALE = 1e-9f;    
 const sf::FloatRect SCREEN({0.f, 0.f}, {WINDOW_WIDTH, WINDOW_HEIGHT});
