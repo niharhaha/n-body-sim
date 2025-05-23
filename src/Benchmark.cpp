@@ -7,48 +7,53 @@
 
 
 template <typename Simulator, typename Func, typename... Args>
-void benchmark(Simulator simRunner, Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int simStat) {
+void benchmark(Simulator simRunner, Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int simStat, std::string algoName) {
     ParticleSystem ps;
-    ps.createRandomSystem(totalSize - largeBodyCount);   
-    ps.createRandomSystem(largeBodyCount, 1e15f, 1e17f, 2.f, 10.f, 15.f);   
+    ps.createRandomSystem(totalSize - largeBodyCount - 1);   
+    ps.createRandomSystem(largeBodyCount, 1e16f, 1e17f, 7.f, 10.f, 15.f);  
+    if (largeBodyCount > 0) { ps.createRandomSystem(1, 1e18f, 1e21f, 14.f, 20.f, 25.f); } 
 
-    simRunner(ps, [forceComputor, &args...](ParticleSystem& ps_ref) { forceComputor(ps_ref, std::forward<Args>(args)...); }, simStat);
+    simRunner(ps, [forceComputor, &args...](ParticleSystem& ps_ref) { forceComputor(ps_ref, std::forward<Args>(args)...); }, simStat, algoName);
 }
 
 template <typename Func, typename... Args>
-void benchmarkByIters(Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int iters) {
-    benchmark([](ParticleSystem& ps, auto&& func, int iters) { createIterSimulation(ps, std::forward<decltype(func)>(func), iters);},
-    forceComputor, args..., totalSize, largeBodyCount, iters);
+void benchmarkByIters(Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int iters, std::string algoName) {
+    benchmark([](ParticleSystem& ps, auto&& func, int iters, std::string algoName) { createIterSimulation(ps, std::forward<decltype(func)>(func), iters, algoName);},
+    forceComputor, args..., totalSize, largeBodyCount, iters, algoName);
 }
 
 template <typename Func, typename... Args>
-void benchmarkByTime(Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int time) {
-    benchmark([](ParticleSystem& ps, auto&& func, int time) { createTimeSimulation(ps, std::forward<decltype(func)>(func), time);},
-    forceComputor, args..., totalSize, largeBodyCount, time);
+void benchmarkByTime(Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int time, std::string algoName) {
+    benchmark([](ParticleSystem& ps, auto&& func, int time, std::string algoName) { createTimeSimulation(ps, std::forward<decltype(func)>(func), time, algoName);},
+    forceComputor, args..., totalSize, largeBodyCount, time, algoName);
 }
 
 void benchmarkThreadedBarnesHutByIters(int totalSize, int largeBodyCount, int iters) {
     ThreadPool pool;
-    benchmarkByIters([&pool](ParticleSystem& ps_ref) { computeThreadPoolBarnesHutForces(ps_ref, pool); }, totalSize, largeBodyCount, iters);
+    std::ostringstream oss;
+    oss << "Threaded(" << pool.getNumWorkers() << ") Barnes Hut";
+    benchmarkByIters([&pool](ParticleSystem& ps_ref) { computeThreadPoolBarnesHutForces(ps_ref, pool); }, totalSize, largeBodyCount, iters, oss.str());
 }
 
 void benchmarkBarnesHutByIters(int totalSize, int largeBodyCount, int iters) {
-    benchmarkByIters([](ParticleSystem& ps_ref) { computeBarnesHutForces(ps_ref); }, totalSize, largeBodyCount, iters);
+    benchmarkByIters([](ParticleSystem& ps_ref) { computeBarnesHutForces(ps_ref); }, totalSize, largeBodyCount, iters, "Barnes Hut");
 }
 
 void benchmarkBruteForceByIters(int totalSize, int largeBodyCount, int iters) {
-    benchmarkByIters([](ParticleSystem& ps_ref) { computeBruteForces(ps_ref); }, totalSize, largeBodyCount, iters);
+    benchmarkByIters([](ParticleSystem& ps_ref) { computeBruteForces(ps_ref); }, totalSize, largeBodyCount, iters, "Brute Force");
 }
 
 void benchmarkThreadedBarnesHutByTime(int totalSize, int largeBodyCount, int time) {
     ThreadPool pool;
-    benchmarkByIters([&pool](ParticleSystem& ps_ref) { computeThreadPoolBarnesHutForces(ps_ref, pool); }, totalSize, largeBodyCount, time);
+    std::ostringstream oss;
+    oss << "Threaded(" << pool.getNumWorkers() << ") Barnes Hut";
+    benchmarkByTime([&pool](ParticleSystem& ps_ref) { computeThreadPoolBarnesHutForces(ps_ref, pool); }, totalSize, largeBodyCount, time, oss.str());
 }
 
 void benchmarkBarnesHutByTime(int totalSize, int largeBodyCount, int time) {
-    benchmarkByIters([](ParticleSystem& ps_ref) { computeBarnesHutForces(ps_ref); }, totalSize, largeBodyCount, time);
+    benchmarkByTime([](ParticleSystem& ps_ref) { computeBarnesHutForces(ps_ref); }, totalSize, largeBodyCount, time, "Barnes Hut");
 }
 
 void benchmarkBruteForceByTime(int totalSize, int largeBodyCount, int time) {
-    benchmarkByIters([](ParticleSystem& ps_ref) { computeBruteForces(ps_ref); }, totalSize, largeBodyCount, time);
+    benchmarkByTime([](ParticleSystem& ps_ref) { computeBruteForces(ps_ref); }, totalSize, largeBodyCount, time, "Brute Force");
 }

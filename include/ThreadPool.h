@@ -18,6 +18,7 @@ public:
     // Submit a task to the thread pool 
     template <class F, class... Args>
     auto enqueue(F&& f, Args&&... args) -> std::future<typename std::invoke_result_t<F, Args...>>;
+    int getNumWorkers() { return workers.size(); } 
 
 
 private:

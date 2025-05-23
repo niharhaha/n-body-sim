@@ -49,6 +49,9 @@ public:
         const float minMass = 0.1f;          // 100g
         const float maxMass = 1e14f;   // 1 million kg
 
+        if (mass > 1e18f) { return sf::Color(40, 40, 120); }
+        if (mass > 1e15f) { return sf::Color(120, 100, 220); }
+
         std::vector<sf::Color> colorScale = {
             sf::Color(220, 220, 255),  // Pale blue
             sf::Color(150, 200, 255),  // Sky blue

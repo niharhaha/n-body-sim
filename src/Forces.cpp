@@ -60,12 +60,12 @@ void computeThreadPoolBarnesHutForces(ParticleSystem& ps, ThreadPool& pool) {
     sf::Clock timer;
     QuadTree quadTree(particles);
     sf::Time elapsed = timer.getElapsedTime();
-    std::cout << "QuadTree build time: " << elapsed.asMilliseconds() << " ms\n";
+    // std::cout << "QuadTree build time: " << elapsed.asMilliseconds() << " ms\n";
 
     sf::Clock timer2;
     quadTree.updateMassDistribution();
     elapsed = timer2.getElapsedTime();
-    std::cout << "Mass update time: " << elapsed.asMilliseconds() << " ms\n";
+    // std::cout << "Mass update time: " << elapsed.asMilliseconds() << " ms\n";
     
     std::vector<std::future<void>> futures(numThreads);
 

@@ -16,6 +16,14 @@ void ParticleSystem::updateAndDraw(sf::RenderWindow &window) {
     }
 }
 
+void ParticleSystem::draw(sf::RenderWindow &window) {
+    size_t n = particles_.size();
+    // Apply forces to particles, update their position and draw them
+    for (size_t i = 0; i < n; ++i) {
+        particles_[i].draw(window);
+    }
+}
+
 void ParticleSystem::createTriangularSystem(float sideLength, float mass, float radius) {
     particles_.clear();
     forces_.clear();
@@ -35,7 +43,6 @@ void ParticleSystem::createTriangularSystem(float sideLength, float mass, float 
 }
 
 void ParticleSystem::createRandomSystem(float size, float minMass, float maxMass, float massSkew, float minRadius, float maxRadius) {
-
     std::random_device rd;
     std::mt19937 mt(rd());
 
@@ -55,25 +62,4 @@ void ParticleSystem::createRandomSystem(float size, float minMass, float maxMass
 
         addParticle(mass, pos, ZERO_VEC, distRadius(mt));
     }
-}
-
-void ParticleSystem::createSolarSystem() {
-    particles_.clear();
-    forces_.clear();
-
-    addParticle(
-        1.989e3f * SCALE,                          // mass (Sun)
-        WINDOW_CENTER,            // position
-        sf::Vector2f(0.f, 0.f),            // velocity
-        20.f,                              // radius (for drawing)
-        sf::Color::Yellow                   // color
-    );
-
-    addParticle(
-        5.972e2f * SCALE,
-        WINDOW_CENTER + sf::Vector2f(AU * SCALE, 0.f),
-        sf::Vector2f(0.f, 29.78e3f * SCALE),
-        10.f,
-        sf::Color::Blue
-    );
 }
