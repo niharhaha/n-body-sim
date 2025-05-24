@@ -6,8 +6,8 @@
 inline constexpr float G = 6.67e-11f;       // Gravitational constant
 inline constexpr float TIME_STEP = 0.005f;      // Time step for simulation
 inline constexpr float UNIT_RADIUS = 8.0f; // Default particle radius
-inline constexpr int WINDOW_WIDTH = 1500.0f;
-inline constexpr int WINDOW_HEIGHT = 900.0f;
+inline constexpr int WINDOW_WIDTH = 1080.0f;
+inline constexpr int WINDOW_HEIGHT = 720.0f;
 inline constexpr float UNIT_MASS = 1e10f; // In kilograms
 inline constexpr float THETA = 0.5f;  // Barnes-Hut theta threshold
 inline constexpr float EPSILON = 1e-4f; 
