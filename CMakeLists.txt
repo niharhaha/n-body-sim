@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(Sim)
+project(sim)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -21,9 +21,9 @@ endif()
 # Try to find SFML 3.0 with required components
 find_package(SFML 3.0 REQUIRED COMPONENTS Graphics Window System)
 
-add_executable(Sim ${SOURCES})
+add_executable(sim ${SOURCES})
 
-target_link_libraries(Sim
+target_link_libraries(sim
     SFML::Graphics
     SFML::Window
     SFML::System
