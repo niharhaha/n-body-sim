@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(NBodySim)
+project(Sim)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -11,17 +11,19 @@ file(GLOB SOURCES
     src/*.cpp
 )
 
-# User must specify SFML path at cmake invocation
-if(NOT DEFINED CMAKE_PREFIX_PATH)
-  message(FATAL_ERROR "You must specify -DCMAKE_PREFIX_PATH to SFML directory")
+# Optionally allow user to specify SFML path
+if(CMAKE_PREFIX_PATH)
+  message(STATUS "Using user-specified CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+else()
+  message(STATUS "No CMAKE_PREFIX_PATH specified, using default find_package behavior.")
 endif()
 
-# Find SFML version 3.0  
+# Try to find SFML 3.0 with required components
 find_package(SFML 3.0 REQUIRED COMPONENTS Graphics Window System)
 
-add_executable(NBodySim ${SOURCES})
+add_executable(Sim ${SOURCES})
 
-target_link_libraries(NBodySim
+target_link_libraries(Sim
     SFML::Graphics
     SFML::Window
     SFML::System
