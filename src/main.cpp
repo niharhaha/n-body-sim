@@ -15,23 +15,27 @@ int defaultSize(std::string type, std::string mode) {
     else { return 0; }
 }
 
-int defaultLargeBodyCount(std::string type, std::string mode) {
+int defaultLargeCount(std::string type, std::string mode) {
     if (type == "bruteforce") { return 2; }
     if (type == "barneshut") { return 3; }
     if (type == "threadedbh") { return mode == "iters" ? 4 : 3; }
     else { return 0; }
 }
 
-int getSimSize(std::string type, std::string mode, int input) {
-    if (input == -1) { return defaultSize(type, mode); }
-    return input;
+int defaultSimCount(std::string type, std::string mode) {
+    if (mode == "time") { return 20000; }
+    if (type == "bruteforce") { return 100; }
+    else { return 500; }
 }
 
-int getLargeBodyCount(std::string type, std::string mode, int input) {
-    if (input == -1) { return defaultLargeBodyCount(type, mode); }
-    return input;
+template <typename F>
+void runBenchmark(F func, const std::string& type, const std::string& mode, int totalSize, int largeCount, int count) {
+    func(
+        totalSize == -1 ? defaultSize(type, mode) : totalSize,
+        largeCount == -1 ? defaultLargeCount(type, mode) : largeCount,
+        count == -1 ? defaultSimCount(type, mode) : count
+    );
 }
-
 
 int main(int argc, char* argv[]) {
     std::string type = argc > 1 ? argv[1] : "all";
@@ -41,18 +45,17 @@ int main(int argc, char* argv[]) {
     int largeCount = argc > 4 ? std::stoi(argv[4]) : -1;
     int count = argc > 5 ? std::stoi(argv[5]) : -1;
 
+    if (mode != "time" && mode != "iters") { count = 0; }
+    
     if (type == "bruteforce") {
-        if (mode == "time") { benchmarkBruteForceByTime(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), count); } 
-        else if (mode == "iters") { benchmarkBruteForceByIters(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), count); }
-        else { benchmarkBruteForceByIters(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), 0); }
+        if (mode == "time") { runBenchmark(benchmarkBruteForceByTime, type, mode, totalSize, largeCount, count); } 
+        else { runBenchmark(benchmarkBruteForceByTime, type, mode, totalSize, largeCount, count); }
     } else if (type == "barneshut") {
-        if (mode == "time") { benchmarkBarnesHutByTime(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), count); } 
-        else if (mode == "iters") { benchmarkBarnesHutByIters(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), count); }
-        else { benchmarkBarnesHutByIters(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), 0); }
+        if (mode == "time") { runBenchmark(benchmarkBarnesHutByTime, type, mode, totalSize, largeCount, count); } 
+        else { runBenchmark(benchmarkBarnesHutByIters, type, mode, totalSize, largeCount, count); }
     } else if (type == "threadedbh") {
-        if (mode == "time") { benchmarkThreadedBarnesHutByTime(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), count); } 
-        else if (mode == "iters") { benchmarkThreadedBarnesHutByIters(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), count); }
-        else { benchmarkThreadedBarnesHutByIters(getSimSize(type, mode, totalSize), getLargeBodyCount(type, mode, largeCount), 0); }
+        if (mode == "time") { runBenchmark(benchmarkThreadedBarnesHutByTime, type, mode, totalSize, largeCount, count); } 
+        else { runBenchmark(benchmarkThreadedBarnesHutByIters, type, mode, totalSize, largeCount, count); }
     } else {
         benchmarkBruteForceByIters();
         benchmarkBarnesHutByIters();
