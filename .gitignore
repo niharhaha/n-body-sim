@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# Build files
+build/*
+
+# Except the assets directory
+!build/assets/
+!build/assets/**
+
