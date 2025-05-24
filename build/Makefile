@@ -177,30 +177,6 @@ src/Forces.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Forces.cpp.s
 .PHONY : src/Forces.cpp.s
 
-src/Particle.o: src/Particle.cpp.o
-.PHONY : src/Particle.o
-
-# target to build an object file
-src/Particle.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Particle.cpp.o
-.PHONY : src/Particle.cpp.o
-
-src/Particle.i: src/Particle.cpp.i
-.PHONY : src/Particle.i
-
-# target to preprocess a source file
-src/Particle.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Particle.cpp.i
-.PHONY : src/Particle.cpp.i
-
-src/Particle.s: src/Particle.cpp.s
-.PHONY : src/Particle.s
-
-# target to generate assembly for a file
-src/Particle.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NBodySim.dir/build.make CMakeFiles/NBodySim.dir/src/Particle.cpp.s
-.PHONY : src/Particle.cpp.s
-
 src/ParticleSystem.o: src/ParticleSystem.cpp.o
 .PHONY : src/ParticleSystem.o
 
@@ -312,9 +288,6 @@ help:
 	@echo "... src/Forces.o"
 	@echo "... src/Forces.i"
 	@echo "... src/Forces.s"
-	@echo "... src/Particle.o"
-	@echo "... src/Particle.i"
-	@echo "... src/Particle.s"
 	@echo "... src/ParticleSystem.o"
 	@echo "... src/ParticleSystem.i"
 	@echo "... src/ParticleSystem.s"

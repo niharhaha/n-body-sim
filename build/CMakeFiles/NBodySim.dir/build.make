@@ -100,24 +100,10 @@ CMakeFiles/NBodySim.dir/src/Forces.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/NBodySim.dir/src/Forces.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nihar/Desktop/Projects/n-body-sim/src/Forces.cpp -o CMakeFiles/NBodySim.dir/src/Forces.cpp.s
 
-CMakeFiles/NBodySim.dir/src/Particle.cpp.o: CMakeFiles/NBodySim.dir/flags.make
-CMakeFiles/NBodySim.dir/src/Particle.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/Particle.cpp
-CMakeFiles/NBodySim.dir/src/Particle.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/NBodySim.dir/src/Particle.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/Particle.cpp.o -MF CMakeFiles/NBodySim.dir/src/Particle.cpp.o.d -o CMakeFiles/NBodySim.dir/src/Particle.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/Particle.cpp
-
-CMakeFiles/NBodySim.dir/src/Particle.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/NBodySim.dir/src/Particle.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nihar/Desktop/Projects/n-body-sim/src/Particle.cpp > CMakeFiles/NBodySim.dir/src/Particle.cpp.i
-
-CMakeFiles/NBodySim.dir/src/Particle.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/NBodySim.dir/src/Particle.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nihar/Desktop/Projects/n-body-sim/src/Particle.cpp -o CMakeFiles/NBodySim.dir/src/Particle.cpp.s
-
 CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o: CMakeFiles/NBodySim.dir/flags.make
 CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/ParticleSystem.cpp
 CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o -MF CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o.d -o CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/ParticleSystem.cpp
 
 CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.i: cmake_force
@@ -131,7 +117,7 @@ CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.s: cmake_force
 CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o: CMakeFiles/NBodySim.dir/flags.make
 CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/QuadTree.cpp
 CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o -MF CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o.d -o CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/QuadTree.cpp
 
 CMakeFiles/NBodySim.dir/src/QuadTree.cpp.i: cmake_force
@@ -145,7 +131,7 @@ CMakeFiles/NBodySim.dir/src/QuadTree.cpp.s: cmake_force
 CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o: CMakeFiles/NBodySim.dir/flags.make
 CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/ThreadPool.cpp
 CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o -MF CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o.d -o CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/ThreadPool.cpp
 
 CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.i: cmake_force
@@ -159,7 +145,7 @@ CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.s: cmake_force
 CMakeFiles/NBodySim.dir/src/main.cpp.o: CMakeFiles/NBodySim.dir/flags.make
 CMakeFiles/NBodySim.dir/src/main.cpp.o: /Users/nihar/Desktop/Projects/n-body-sim/src/main.cpp
 CMakeFiles/NBodySim.dir/src/main.cpp.o: CMakeFiles/NBodySim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/NBodySim.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/NBodySim.dir/src/main.cpp.o"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/NBodySim.dir/src/main.cpp.o -MF CMakeFiles/NBodySim.dir/src/main.cpp.o.d -o CMakeFiles/NBodySim.dir/src/main.cpp.o -c /Users/nihar/Desktop/Projects/n-body-sim/src/main.cpp
 
 CMakeFiles/NBodySim.dir/src/main.cpp.i: cmake_force
@@ -174,7 +160,6 @@ CMakeFiles/NBodySim.dir/src/main.cpp.s: cmake_force
 NBodySim_OBJECTS = \
 "CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o" \
 "CMakeFiles/NBodySim.dir/src/Forces.cpp.o" \
-"CMakeFiles/NBodySim.dir/src/Particle.cpp.o" \
 "CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o" \
 "CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o" \
 "CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o" \
@@ -185,7 +170,6 @@ NBodySim_EXTERNAL_OBJECTS =
 
 NBodySim: CMakeFiles/NBodySim.dir/src/Benchmark.cpp.o
 NBodySim: CMakeFiles/NBodySim.dir/src/Forces.cpp.o
-NBodySim: CMakeFiles/NBodySim.dir/src/Particle.cpp.o
 NBodySim: CMakeFiles/NBodySim.dir/src/ParticleSystem.cpp.o
 NBodySim: CMakeFiles/NBodySim.dir/src/QuadTree.cpp.o
 NBodySim: CMakeFiles/NBodySim.dir/src/ThreadPool.cpp.o
@@ -195,7 +179,7 @@ NBodySim: /opt/homebrew/opt/sfml/lib/libsfml-graphics.3.0.1.dylib
 NBodySim: /opt/homebrew/opt/sfml/lib/libsfml-window.3.0.1.dylib
 NBodySim: /opt/homebrew/opt/sfml/lib/libsfml-system.3.0.1.dylib
 NBodySim: CMakeFiles/NBodySim.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable NBodySim"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/nihar/Desktop/Projects/n-body-sim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable NBodySim"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/NBodySim.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

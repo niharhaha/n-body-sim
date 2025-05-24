@@ -5,7 +5,7 @@
 #include "ThreadPool.h"
 #include "Simulation.h"
 
-
+// Generic benchmark simulation runner
 template <typename Simulator, typename Func, typename... Args>
 void benchmark(Simulator simRunner, Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int simStat, std::string algoName) {
     ParticleSystem ps;
@@ -16,18 +16,21 @@ void benchmark(Simulator simRunner, Func forceComputor, Args&&... args, int tota
     simRunner(ps, [forceComputor, &args...](ParticleSystem& ps_ref) { forceComputor(ps_ref, std::forward<Args>(args)...); }, simStat, algoName);
 }
 
+// Generic iterations benchmark simulation runner
 template <typename Func, typename... Args>
 void benchmarkByIters(Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int iters, std::string algoName) {
     benchmark([](ParticleSystem& ps, auto&& func, int iters, std::string algoName) { createIterSimulation(ps, std::forward<decltype(func)>(func), iters, algoName);},
     forceComputor, args..., totalSize, largeBodyCount, iters, algoName);
 }
 
+// Generic timer benchmark simulation runner
 template <typename Func, typename... Args>
 void benchmarkByTime(Func forceComputor, Args&&... args, int totalSize, int largeBodyCount, int time, std::string algoName) {
     benchmark([](ParticleSystem& ps, auto&& func, int time, std::string algoName) { createTimeSimulation(ps, std::forward<decltype(func)>(func), time, algoName);},
     forceComputor, args..., totalSize, largeBodyCount, time, algoName);
 }
 
+// Benchmarking functions base on type, mode
 void benchmarkThreadedBarnesHutByIters(int totalSize, int largeBodyCount, int iters) {
     ThreadPool pool;
     std::ostringstream oss;

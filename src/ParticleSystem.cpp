@@ -1,5 +1,4 @@
 #include "ParticleSystem.h"
-#include <iostream>
 #include <random>
 
 ParticleSystem::ParticleSystem(std::vector<Particle> particles) {
@@ -16,17 +15,8 @@ void ParticleSystem::updateAndDraw(sf::RenderWindow &window) {
     }
 }
 
-void ParticleSystem::draw(sf::RenderWindow &window) {
-    size_t n = particles_.size();
-    // Apply forces to particles, update their position and draw them
-    for (size_t i = 0; i < n; ++i) {
-        particles_[i].draw(window);
-    }
-}
-
 void ParticleSystem::createTriangularSystem(float sideLength, float mass, float radius) {
-    particles_.clear();
-    forces_.clear();
+    clearSystem();
 
     // Calculate height of equilateral triangle
     float height = sideLength * std::sqrt(3.f) / 2.f;
@@ -43,23 +33,19 @@ void ParticleSystem::createTriangularSystem(float sideLength, float mass, float 
 }
 
 void ParticleSystem::createRandomSystem(float size, float minMass, float maxMass, float massSkew, float minRadius, float maxRadius) {
-    std::random_device rd;
-    std::mt19937 mt(rd());
+    std::random_device rd; std::mt19937 mt(rd());
 
+    // Random distributions
     std::uniform_real_distribution<float> distX(0.f, WINDOW_WIDTH);
     std::uniform_real_distribution<float> distY(0.f, WINDOW_HEIGHT);
     std::uniform_real_distribution<float> distMass(0.f, 1.f);   
-    
-
     std::uniform_real_distribution<float> distRadius(minRadius, maxRadius);  
 
-     for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         sf::Vector2f pos(distX(mt), distY(mt));
-        float u = distMass(mt);       // uniform [0,1]
+        float u = distMass(mt);    
         float skewed = std::pow(u, massSkew); // left skew
-        // Scale to range:
-        float mass = minMass + (maxMass - minMass) * skewed;
-
+        float mass = minMass + (maxMass - minMass) * skewed; // scale to range
         addParticle(mass, pos, ZERO_VEC, distRadius(mt));
     }
 }

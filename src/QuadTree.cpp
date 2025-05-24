@@ -2,69 +2,24 @@
 #include <vector>
 #include <thread>
 #include <mutex>
-#include <iostream>
+
 QuadTree::QuadTree(const std::vector<Particle>& particles, const sf::FloatRect& boundary) : boundary_(boundary) {
-    Particle p(0);
-    particle_ = &p;
-
-    for (auto& particle : particles) {
-        insertParticle(particle);
-    }
-}
-
-QuadTree::QuadTree(ThreadPool& pool, const std::vector<Particle>& particles, const sf::FloatRect& boundary) : boundary_(boundary) {
-    subdivide();
-
-    sf::Vector2f boundaryPos = boundary.position;
-    sf::Vector2f boundarySize = boundary.size;
-    std::vector<Particle> quadrants[4];
-
-    for (auto& p : particles) {
-        sf::Vector2f pointPos = p.getPosition();
-        int q = -1;
-        if (boundaryPos.x <= pointPos.x && pointPos.x < boundaryPos.x + boundarySize.x / 2) {
-            if (boundaryPos.y <= pointPos.y && pointPos.y < boundaryPos.y + boundarySize.y / 2) {
-                q = 1;
-            } else if (boundaryPos.y + boundarySize.y / 2 <= pointPos.y && pointPos.y < boundaryPos.y + boundarySize.y) {
-                q = 2;
-            }
-        } else if (boundaryPos.x + boundarySize.x / 2 <= pointPos.x && pointPos.x < boundaryPos.x + boundarySize.x) {
-            if (boundaryPos.y <= pointPos.y && pointPos.y < boundaryPos.y + boundarySize.y / 2) {
-                q = 0;
-            } else if (boundaryPos.y + boundarySize.y / 2 <= pointPos.y && pointPos.y < boundaryPos.y + boundarySize.y) {
-                q = 3;
-            }
-        }
-        if (q != -1) { quadrants[q].push_back(p); }
-    }
-
-    // std::array<std::future<void>, 4> futures;
-    for (int q = 0; q < 4; q++) {
-        auto childPtr = children_[q].get();
-        auto* bucket = &quadrants[q];
-        pool.enqueue([childPtr, bucket] {
-            for (auto& p : *bucket) {
-                childPtr->insertParticle(p);
-            }
-        });
-    }
-
-    // for (auto& f : futures) { f.get(); }
+    for (auto& particle : particles) { insertParticle(particle); }
 }
 
 bool QuadTree::insertParticle(const Particle &p) {
-    if (!containsPoint(boundary_, p.getPosition())) { return false; }
+    if (!containsPoint(boundary_, p.getPosition())) { return false; }  // Don't insert out-of-range particles
 
     if (!subdivided_ && !hasParticle_) {
-        particle_ = const_cast<Particle*>(&p);
-        hasParticle_ = true;
-    } else {
-        if (!subdivided_) {
+        particle_ = const_cast<Particle*>(&p); // Add particle to node if none exists
+        hasParticle_ = true; 
+    } else { 
+        if (!subdivided_) { // Subdivide if not
             subdivide();
             for (auto& child : children_) { if (child->insertParticle(*particle_)) { break; } }
             hasParticle_ = false;
         }
-
+        // Insert particle to appropriate child node
         for (auto& child : children_) { if (child->insertParticle(p)) { break; } } 
     }
     
@@ -73,13 +28,12 @@ bool QuadTree::insertParticle(const Particle &p) {
 
 
 sf::Vector2f QuadTree::computeForceOnTarget(const Particle &target) {
-    // if (!containsPoint(SCREEN, target.getPosition())) { return {0.f, 0.f}; }
-    if (totalMass_ == 0.f) { return {0.f, 0.f}; }
-    if (particle_ && particle_ == &target) { return {0.f, 0.f}; }
+    if (totalMass_ == 0.f) { return {0.f, 0.f}; } // If no particle/mass exists
+    if (particle_ && particle_ == &target) { return {0.f, 0.f}; } // Particle doesn't exert force on itself
 
-    if (!subdivided_ && particle_) {
+    if (!subdivided_ && particle_) { // Single particle at node
         return Particle::computeForce(target, *particle_);
-    } else {
+    } else { 
         sf::Vector2f dir = centerOfMass_ - target.getPosition();
         float distSq = dir.x * dir.x + dir.y * dir.y; 
         if (distSq < EPSILON) { return {0.f, 0.f}; }
@@ -87,26 +41,24 @@ sf::Vector2f QuadTree::computeForceOnTarget(const Particle &target) {
         
         float ratio = std::max(boundary_.size.x, boundary_.size.y) / dist;
 
-        if (ratio < THETA) {
+        if (ratio < THETA) { // If can approximate (Barnes-Hut)
             return G * target.getMass() * totalMass_ / distSq * (dir / dist);
-        } else {
+        } else { // Else sum forces by children
             sf::Vector2f force = {0.f, 0.f};
             for (int i = 0; i < 4; ++i) {
                 if (children_[i]) {
                     force += children_[i]->computeForceOnTarget(target);
                 }
             }
-
             return force;
         }
-
     }
     
     return {0.f, 0.f};
 }
 
 void QuadTree::updateMassDistribution() {
-    if (isLeaf()) {
+    if (isLeaf()) { // If single particle
         if (hasParticle_) {
             totalMass_ = particle_->getMass();
             centerOfMass_ = particle_->getPosition();
@@ -116,7 +68,7 @@ void QuadTree::updateMassDistribution() {
     
     totalMass_ = 0.f;
     centerOfMass_ = {0.f, 0.f};
-
+    // Sum children mass and position
     for (auto& child : children_) {
         if (child) {
             child->updateMassDistribution();

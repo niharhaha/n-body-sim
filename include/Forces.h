@@ -1,11 +1,10 @@
 #ifndef FORCES_H
 #define FORCES_H
 
-#include <vector>
-#include "Particle.h"
-#include <SFML/System/Vector2.hpp>
 #include "QuadTree.h"
+#include "ThreadPool.h"
 #include "ParticleSystem.h"
+
 // The O(n^2) algorithm 
 void computeBruteForces(ParticleSystem& ps);
 

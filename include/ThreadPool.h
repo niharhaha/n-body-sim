@@ -12,24 +12,24 @@
 #include <atomic>
 class ThreadPool {
 public:
+    // Constructor
     explicit ThreadPool(size_t numThreads = std::thread::hardware_concurrency());
+
+    // Destructor
     ~ThreadPool();
+
+    // Getter
+    int getNumWorkers() { return workers.size(); } 
 
     // Submit a task to the thread pool 
     template <class F, class... Args>
     auto enqueue(F&& f, Args&&... args) -> std::future<typename std::invoke_result_t<F, Args...>>;
-    int getNumWorkers() { return workers.size(); } 
-
 
 private:
-    // Worker threads
-    std::vector<std::thread> workers;
+    std::vector<std::thread> workers; // Worker threads
+    std::queue<std::function<void()>> tasks; // Task queue
 
-    // Task queue
-    std::queue<std::function<void()>> tasks;
-
-    // Synchronization
-    std::mutex queueMutex;
+    std::mutex queueMutex; // Synchronization
     std::condition_variable condition;
     std::atomic<bool> stop;
 };
@@ -42,13 +42,14 @@ auto ThreadPool::enqueue(F&& task, Args&&... args)
     auto taskPtr = std::make_shared<std::packaged_task<return_type()>>(
         std::bind(std::forward<F>(task), std::forward<Args>(args)...)  
     );
-    std::future<return_type> res = taskPtr->get_future();
+
+    std::future<return_type> res = taskPtr->get_future(); // Return the future to get() later
 
     std::unique_lock<std::mutex> lock(queueMutex);
     tasks.emplace([taskPtr] { (*taskPtr)(); });
     lock.unlock();
-    condition.notify_one();
-    return res;
+    condition.notify_one(); // Notify any worker thread to take up the task
+    return res; 
 }
 
 #endif

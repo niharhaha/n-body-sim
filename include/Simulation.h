@@ -9,71 +9,73 @@ void drawResultText(sf::RenderWindow& window, const sf::Font font, const std::st
     
     resultText.setCharacterSize(textSize);
     textRect = resultText.getLocalBounds();
-    resultText.setOrigin({textRect.position.x + textRect.size.x / 2.0f, textRect.position.y + textRect.size.y / 2.0f});
+    resultText.setOrigin({textRect.position.x + textRect.size.x / 2.0f, textRect.position.y + textRect.size.y / 2.0f}); // Center the text
 
-    resultText.setPosition(position);
+    resultText.setPosition(position); // Text properties
     resultText.setStyle(sf::Text::Bold);
     resultText.setFillColor(sf::Color::White);
-
-    resultText.setOutlineColor(sf::Color::Black);           // Outline color
+    resultText.setOutlineColor(sf::Color::Black);  
     resultText.setOutlineThickness(2);                      
 
-    window.draw(resultText);
+    window.draw(resultText); // Draw the text on input window
 }
 
+// Generic simulation runner
 template <typename LoopCondition, typename FooterPrinter, typename Func, typename... Args>
 void createSimulation(int n, std::string algoName, ParticleSystem& ps, Func forceComputor, LoopCondition&& loopCondition, FooterPrinter&& footer, Args&&... args) {
-    std::ostringstream oss;
-    oss << n << "-Body Gravity Simulation (" << algoName <<")";
+    std::ostringstream oss; // Window header
+    oss << n << "-Body Gravity Simulation (" << algoName << ")";
 
-    sf::RenderWindow window(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), oss.str());
-    const sf::Font font("assets/font.ttf");
+    sf::RenderWindow window(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), oss.str()); // Create window
+    const sf::Font font("assets/font.ttf"); // Load the font
     
-    float totalTime = 0.0f;
+    float totalTime = 0.0f; // Global time-keeping
     sf::Clock globalClock;
 
-    sf::Text iterText(font, "", statTextSize);
+    sf::Text iterText(font, "", statTextSize); // Iteration text initialization
     iterText.setPosition(WINDOW_TEXT_CORNER);
     iterText.setStyle(sf::Text::Bold);
     iterText.setOutlineColor(sf::Color::Black);          
     iterText.setOutlineThickness(1);  
 
-    sf::Text timeText(font, "", statTextSize);
+    sf::Text timeText(font, "", statTextSize); // Timer text initialization
     timeText.setPosition(WINDOW_TEXT_CORNER2);
     timeText.setStyle(sf::Text::Bold);
     timeText.setOutlineColor(sf::Color::Black);         
     timeText.setOutlineThickness(1);  
    
-
-    int iter = 1;
-    
+    int iter = 1; // Iterations counter
+    std::optional<sf::Event> eventOpt;
     while (true) {
         iter++;
-        std::optional<sf::Event> eventOpt = window.pollEvent();
-        while (eventOpt.has_value()) {
+        eventOpt = window.pollEvent();
+        while (eventOpt.has_value()) { // Check if window was closed
             const sf::Event& event = eventOpt.value();
             if (event.is<sf::Event::Closed>()) window.close();
             eventOpt = window.pollEvent();
         }
 
-        window.clear(sf::Color::Black);
-        sf::Clock frameClock;
-        forceComputor(ps, std::forward<Args>(args)...);
+        window.clear(sf::Color::Black); // Clear window to draw new frame
+
+        sf::Clock frameClock; // Frame time-keeping
+        forceComputor(ps, std::forward<Args>(args)...); // Apply the forces, update particle positions
         totalTime += frameClock.getElapsedTime().asMilliseconds(); 
-        ps.updateAndDraw(window);
+         
+        // Update stat texts
         iterText.setString("Iteration: " + std::to_string(iter));
-        float seconds = globalClock.getElapsedTime().asSeconds();
         std::ostringstream oss;
-        oss << std::fixed << std::setprecision(2) << seconds;
-        std::string formattedTime = oss.str();  
-        timeText.setString("Time Elapsed: " + formattedTime + "s");
+        oss << std::fixed << std::setprecision(2) << globalClock.getElapsedTime().asSeconds();
+        timeText.setString("Time Elapsed: " + oss.str() + "s");
         
+        ps.updateAndDraw(window); // Draw the updates
         window.draw(iterText);
         window.draw(timeText);
-        window.display();
+        
+        window.display(); // Display the new frame
 
-        if (!loopCondition(iter, globalClock)) {
+        if (!loopCondition(iter, globalClock)) { // Check if simulation has ended
             
+            // Draw and display the results 
             std::vector<std::string> results = footer(n, iter - 1, totalTime, globalClock);
             drawResultText(window, font, results[0], headingTextSize, WINDOW_HEADING_TEXT_CENTER);
             drawResultText(window, font, results[1], resultTextSize, WINDOW_RESULT_TEXT_CENTER);
@@ -82,8 +84,8 @@ void createSimulation(int n, std::string algoName, ParticleSystem& ps, Func forc
             drawResultText(window, font, results[4], resultTextSize, WINDOW_RESULT4_TEXT_CENTER);
             window.display();
 
-            while (window.isOpen()) {
-                std::optional<sf::Event> eventOpt = window.pollEvent();
+            while (window.isOpen()) { // Check if window was closed
+                eventOpt = window.pollEvent(); 
                 while (eventOpt.has_value()) {
                     const sf::Event& event = eventOpt.value();
                     if (event.is<sf::Event::Closed>()) window.close();
@@ -96,6 +98,7 @@ void createSimulation(int n, std::string algoName, ParticleSystem& ps, Func forc
     }
 }
 
+// Create a iteration-based simulation
 template <typename Func, typename... Args>
 void createIterSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args, int iters = 0, std::string algoName = "") {
     createSimulation(
@@ -130,6 +133,7 @@ void createIterSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args
     
 }
 
+// Create a time-based simulation
 template <typename Func, typename... Args>
 void createTimeSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args, int ms = 0, std::string algoName = "") {
     createSimulation(

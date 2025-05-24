@@ -3,6 +3,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Color.hpp>
 
+// Physical constants
 inline constexpr float G = 6.67e-11f;       // Gravitational constant
 inline constexpr float TIME_STEP = 0.005f;      // Time step for simulation
 inline constexpr float UNIT_RADIUS = 8.0f; // Default particle radius
