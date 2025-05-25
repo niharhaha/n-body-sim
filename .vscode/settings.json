@@ -54,6 +54,7 @@
         "queue": "cpp",
         "thread": "cpp",
         "deque": "cpp",
-        "future": "cpp"
+        "future": "cpp",
+        "condition_variable": "cpp"
     }
 }

@@ -46,7 +46,20 @@ public:
     static inline sf::Vector2f computeForce(const Particle& p1, const Particle& p2) {
         sf::Vector2f dir = p2.getPosition() - p1.getPosition();
         float distSq = dir.x * dir.x + dir.y * dir.y; 
-        if (distSq == 0) { return {0.f, 0.f}; } // To avoid division by zero; TODO: implement collision so this is never the case
+        float r1 = p1.getRadius();
+        float r2 = p2.getRadius();
+        float minDist = r1 + r2;
+
+        // If particles are too close (collided), apply a repulsion force
+        if (std::max(r1, r2) > 5.f && distSq < minDist * minDist) {
+            float dist = std::sqrt(distSq);
+            sf::Vector2f normDir = (dist > 0.0001f) ? (dir / (dist)) : sf::Vector2f(0.f, 0.f);
+            float overlap = minDist - dist;
+            sf::Vector2f repulsion = HOOKE_K * overlap * normDir;
+            return repulsion;
+        }
+
+        if (distSq < minDist * minDist) { distSq = minDist * minDist; dir = p1.getPosition() - p2.getPosition(); } // To avoid division by zero; TODO: implement collision so this is never the case
         float dist = std::sqrt(distSq);
         float forceMag = G * p1.getMass() * p2.getMass() / distSq;
             

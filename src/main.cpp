@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     int count = argc > 5 ? std::stoi(argv[5]) : -1;
 
     if (mode != "time" && mode != "iters") { count = 0; } // Infinite simulation if not benchmarking mode
-    
+    if (count == 0) { mode = "inf"; }
     // Run simulation based on choice
     if (type == "bruteforce") {
         if (mode == "time") { runSimulation(benchmarkBruteForceByTime, type, mode, totalSize, largeCount, count); } 

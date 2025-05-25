@@ -12,7 +12,9 @@ inline constexpr int WINDOW_HEIGHT = 720.0f;
 inline constexpr float UNIT_MASS = 1e10f; // In kilograms
 inline constexpr float THETA = 0.5f;  // Barnes-Hut theta threshold
 inline constexpr float EPSILON = 1e-4f; 
+inline constexpr float HOOKE_K = 1e3f; 
 
+// RenderWindow constants
 inline constexpr float smallGap = 5.f;
 inline constexpr float bigGap = 8.f;
 inline constexpr float statTextSize = 24.f;

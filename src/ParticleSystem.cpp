@@ -40,12 +40,15 @@ void ParticleSystem::createRandomSystem(float size, float minMass, float maxMass
     std::uniform_real_distribution<float> distY(0.f, WINDOW_HEIGHT);
     std::uniform_real_distribution<float> distMass(0.f, 1.f);   
     std::uniform_real_distribution<float> distRadius(minRadius, maxRadius);  
+    std::uniform_real_distribution<float> velX(WINDOW_WIDTH / -10, WINDOW_WIDTH / 10);
+    std::uniform_real_distribution<float> velY(WINDOW_HEIGHT / -10, WINDOW_HEIGHT / 10);
 
     for (int i = 0; i < size; i++) {
         sf::Vector2f pos(distX(mt), distY(mt));
+        sf::Vector2f vel(velX(mt) / 10, velY(mt) / 10);
         float u = distMass(mt);    
         float skewed = std::pow(u, massSkew); // left skew
         float mass = minMass + (maxMass - minMass) * skewed; // scale to range
-        addParticle(mass, pos, ZERO_VEC, distRadius(mt));
+        addParticle(mass, pos, vel, distRadius(mt));
     }
 }

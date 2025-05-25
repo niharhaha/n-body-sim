@@ -157,7 +157,7 @@ void createTimeSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args
             results.push_back(oss3.str());
 
             std::ostringstream oss4;
-            oss4 << "Real world time simulated: " << TIME_STEP * iters << " s";
+            oss4 << "Frames per second: " << iters / (ms / 1000.0) << " fps";
             results.push_back(oss4.str());
             
             return results;
