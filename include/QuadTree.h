@@ -2,7 +2,6 @@
 #define QUAD_TREE_H
 
 #include "Particle.h"
-#include <memory>
 
 class QuadTree {
 public:
@@ -15,9 +14,9 @@ public:
     
 private:
     struct Quad {
-        sf::Vector2f origin = WINDOW_CENTER;
-        float height = WINDOW_HEIGHT;
-        float width = WINDOW_WIDTH;
+        sf::Vector2f origin;
+        float height;
+        float width;
 
         Quad(sf::Vector2f o = WINDOW_CENTER, 
              float w = WINDOW_WIDTH, 

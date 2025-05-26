@@ -1,8 +1,4 @@
 #include "QuadTree.h"
-#include <vector>
-#include <thread>
-#include <mutex>
-#include <iostream>
 
 QuadTree::QuadTree(const std::vector<Particle> &particles) {
     tree_.clear(); tree_.reserve(4 * particles.size()); // Ready tree_ vector

@@ -1,7 +1,6 @@
 #ifndef PARTICLE_SYSTEM_H
 #define PARTICLE_SYSTEM_H
 
-#include <vector>
 #include "Particle.h"
 
 class ParticleSystem {
