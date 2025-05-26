@@ -2,96 +2,134 @@
 #include <vector>
 #include <thread>
 #include <mutex>
+#include <iostream>
 
-QuadTree::QuadTree(const std::vector<Particle>& particles, const sf::FloatRect& boundary) : boundary_(boundary) {
-    for (auto& particle : particles) { insertParticle(particle); }
+QuadTree::QuadTree(const std::vector<Particle> &particles) {
+    tree_.clear(); tree_.reserve(4 * particles.size()); // Ready tree_ vector
+    tree_.emplace_back(Quad());
+    for (const auto& particle : particles) {
+        if (particle.isOutOfRange()) { continue; }
+        else { insertParticle(particle); }
+    }
+    updateMassDistribution();
 }
 
 bool QuadTree::insertParticle(const Particle &p) {
-    if (!containsPoint(boundary_, p.getPosition())) { return false; }  // Don't insert out-of-range particles
+    return insertParticle(0, p);
+}
 
-    if (!subdivided_ && !hasParticle_) {
-        particle_ = const_cast<Particle*>(&p); // Add particle to node if none exists
-        hasParticle_ = true; 
-    } else { 
-        if (!subdivided_) { // Subdivide if not
-            subdivide();
-            for (auto& child : children_) { if (child->insertParticle(*particle_)) { break; } }
-            hasParticle_ = false;
-        }
-        // Insert particle to appropriate child node
-        for (auto& child : children_) { if (child->insertParticle(p)) { break; } } 
-    }
+bool QuadTree::insertParticle(int idx, const Particle &p) {
+    QuadTreeNode& node = tree_[idx];
+    if (!node.containsPoint(p)) { return false; }
     
+    if (!node.subdivided && !node.hasParticle) {    
+        node.particle = const_cast<Particle*>(&p); 
+        node.hasParticle = true; 
+    } else {
+        if (!node.subdivided) {
+            subdivide(idx);
+            // node = tree_[idx];
+            for (int i = 0; i < 4; i++) {
+                if (insertParticle(node.child_idx + i, *(node.particle))) { break; }
+            }
+            // node = tree_[idx];
+            node.hasParticle = false;
+        }
+        for (int i = 0; i < 4; i++) {
+            if (insertParticle(node.child_idx + i, p)) { break; }
+        }
+    }
+
     return true;
 }
 
+sf::Vector2f QuadTree::computeForceOnTarget(int idx, const Particle &target) {
+    QuadTreeNode& node = tree_[idx];
+    if (node.totalMass == 0.f) { return {0.f, 0.f}; } // If no particle/mass exists
 
-sf::Vector2f QuadTree::computeForceOnTarget(const Particle &target) {
-    if (totalMass_ == 0.f) { return {0.f, 0.f}; } // If no particle/mass exists
-    if (particle_ && particle_ == &target) { return {0.f, 0.f}; } // Particle doesn't exert force on itself
+    if (!node.subdivided && node.hasParticle) { // Single particle at node        
+        return Particle::computeForce(target, *(node.particle));
+    }  
 
-    if (!subdivided_ && particle_) { // Single particle at node
-        return Particle::computeForce(target, *particle_);
-    } else { 
-        sf::Vector2f dir = centerOfMass_ - target.getPosition();
-        float distSq = dir.x * dir.x + dir.y * dir.y; 
-        if (distSq < EPSILON) { return {0.f, 0.f}; }
-        float dist = std::sqrt(distSq);
-        
-        float ratio = std::max(boundary_.size.x, boundary_.size.y) / dist;
+    sf::Vector2f dir = node.centerOfMass - target.getPosition();
+    float distSq = dir.x * dir.x + dir.y * dir.y; 
+    if (distSq < EPSILON) { return {0.f, 0.f}; }
+    float dist = std::sqrt(distSq);
+    
+    float ratio = std::max(node.region.width, node.region.height) / dist;
 
-        if (ratio < THETA) { // If can approximate (Barnes-Hut)
-            return G * target.getMass() * totalMass_ / distSq * (dir / dist);
-        } else { // Else sum forces by children
-            sf::Vector2f force = {0.f, 0.f};
-            for (int i = 0; i < 4; ++i) {
-                if (children_[i]) {
-                    force += children_[i]->computeForceOnTarget(target);
-                }
+    if (ratio < THETA) { // If can approximate (Barnes-Hut)
+        return G * target.getMass() * node.totalMass / distSq * (dir / dist);
+    } else { // Else sum forces by children
+        sf::Vector2f force = {0.f, 0.f};
+        for (int i = 0; i < 4; ++i) {
+            int child = node.child_idx + i;
+            if (child < tree_.size()) {
+                force += computeForceOnTarget(child, target);
             }
-            return force;
         }
+        return force;
     }
     
-    return {0.f, 0.f};
 }
 
-void QuadTree::updateMassDistribution() {
-    if (isLeaf()) { // If single particle
-        if (hasParticle_) {
-            totalMass_ = particle_->getMass();
-            centerOfMass_ = particle_->getPosition();
+sf::Vector2f QuadTree::computeForceOnTarget(const Particle &target) { 
+    return computeForceOnTarget(0, target);
+}
+
+
+void QuadTree::updateMassDistribution(int idx) {
+    QuadTreeNode& node = tree_[idx];
+    if (node.isLeaf()) { // If single particle
+        if (node.hasParticle) {
+            node.totalMass = node.particle->getMass();
+            node.centerOfMass = node.particle->getPosition();
         }
         return;
     }
     
-    totalMass_ = 0.f;
-    centerOfMass_ = {0.f, 0.f};
+    sf::Vector2f centerOfMass = {0.f, 0.f};
+    float totalMass = 0.f;
+
     // Sum children mass and position
-    for (auto& child : children_) {
-        if (child) {
-            child->updateMassDistribution();
-            totalMass_ += child->totalMass_;
-            centerOfMass_ += child->centerOfMass_ * child->totalMass_;
-        }
+
+    for (int i = 0; i < 4 && node.child_idx != 0; i++) {
+        updateMassDistribution(node.child_idx + i);
+        QuadTreeNode& child = tree_[node.child_idx + i];
+        totalMass += child.totalMass;
+        centerOfMass += child.centerOfMass * child.totalMass;
     }
-
     // At least one child exists
-    if (totalMass_ > 0) { centerOfMass_ /= totalMass_; }
+    node.totalMass = totalMass;
+    if (totalMass > 0) { node.centerOfMass = centerOfMass / totalMass; }
 }
 
-void QuadTree::subdivide() {
-    subdivided_ = true;
-
-    sf::Vector2f boundaryPos = boundary_.position;
-    sf::Vector2f boundarySize = boundary_.size;
-
-    float halfWidth = boundarySize.x / 2.f;
-    float halfHeight = boundarySize.y / 2.f;
-
-    children_[0] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x + halfWidth, boundaryPos.y}, {halfWidth, halfHeight})); // NE
-    children_[1] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x, boundaryPos.y}, {halfWidth, halfHeight})); // NW
-    children_[2] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x, boundaryPos.y + halfHeight}, {halfWidth, halfHeight})); // SW
-    children_[3] = std::make_unique<QuadTree>(sf::FloatRect({boundaryPos.x + halfWidth, boundaryPos.y + halfHeight}, {halfWidth, halfHeight})); // SE
+void QuadTree::updateMassDistribution() {
+    updateMassDistribution(0);
 }
+
+void QuadTree::subdivide(int idx) {
+    QuadTreeNode& node = tree_[idx];
+    node.subdivided = true;
+
+    float hw = node.region.width / 2.f;
+    float hh = node.region.height / 2.f;
+
+    sf::Vector2f center = node.region.origin;
+    int childStart = tree_.size();
+
+    std::array<sf::Vector2f, 4> centers = {
+        sf::Vector2f(center.x + hw / 2.f, center.y - hh / 2.f), // NE
+        sf::Vector2f(center.x - hw / 2.f, center.y - hh / 2.f), // NW
+        sf::Vector2f(center.x - hw / 2.f, center.y + hh / 2.f), // SW
+        sf::Vector2f(center.x + hw / 2.f, center.y + hh / 2.f)  // SE
+    };
+
+    for (int i = 0; i < 4; ++i) {
+        Quad childRegion{centers[i], hw, hh};
+        tree_.push_back(QuadTreeNode(childRegion)); 
+    }
+    tree_[idx].child_idx = childStart;  
+}
+
+

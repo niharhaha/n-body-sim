@@ -1,5 +1,6 @@
 #include "Forces.h"
 #include <future>
+#include <iostream>
 
 void computeBruteForces(ParticleSystem& ps) {
     const std::vector<Particle> &particles = ps.getParticles();
@@ -21,13 +22,11 @@ void computeBarnesHutForces(ParticleSystem& ps) {
     size_t n = ps.getSize();
 
     QuadTree quadTree(particles); // Create a QuadTree to compute forces
-    quadTree.updateMassDistribution();
     
     for (size_t i = 0; i < n; i++) {
         forces[i] = quadTree.computeForceOnTarget(particles[i]);
     }
 }
-
 
 void computeThreadPoolBarnesHutForces(ParticleSystem& ps, ThreadPool& pool) {
     const std::vector<Particle> &particles = ps.getParticles();
@@ -37,11 +36,10 @@ void computeThreadPoolBarnesHutForces(ParticleSystem& ps, ThreadPool& pool) {
     int numThreads = pool.getNumWorkers();
     size_t chunkSize = n / numThreads;
 
-    QuadTree quadTree(particles); // Create a QuadTree to compute forces
-    quadTree.updateMassDistribution();
-    
+    QuadTree quadTree(particles); // Create a QuadTree to compute forces    
     std::vector<std::future<void>> futures(numThreads);
 
+    sf::Clock clock2;
     for (size_t t = 0; t < numThreads; t++) {
         // Evenly divide force calculations among 
         futures[t] = pool.enqueue([&quadTree, &particles, &forces, &chunkSize, &numThreads, &n, t] {

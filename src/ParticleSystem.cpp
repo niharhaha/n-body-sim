@@ -7,12 +7,28 @@ ParticleSystem::ParticleSystem(std::vector<Particle> particles) {
 
 void ParticleSystem::updateAndDraw(sf::RenderWindow &window) {
     size_t n = particles_.size();
+    int outSize = 0;
     // Apply forces to particles, update their position and draw them
     for (size_t i = 0; i < n; ++i) {
+        if (particles_[i].isOutOfRange()) { outSize++; continue; }
         particles_[i].applyForce(forces_[i], TIME_STEP);
-        particles_[i].updatePosition(TIME_STEP);
-        particles_[i].draw(window);
+        sf::Vector2f newPos = particles_[i].updatePosition(TIME_STEP);
+
+        if (!RANGE.contains(newPos)) {
+            particles_[i].setOutOfRange();
+        } else {
+            if (SCREEN.contains(newPos)) { particles_[i].draw(window); };
+        }
     }
+    if (outSize > std::pow(6, std::log10(particles_.size()))) {
+        particles_.erase(
+        std::remove_if(particles_.begin(), particles_.end(),
+            [](const Particle& p) { return p.isOutOfRange(); }),
+        particles_.end());
+
+        forces_.assign(particles_.size(), sf::Vector2f{0.f, 0.f});
+    }
+    
 }
 
 void ParticleSystem::createTriangularSystem(float sideLength, float mass, float radius) {

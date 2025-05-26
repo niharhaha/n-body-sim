@@ -24,15 +24,17 @@ public:
     float getRadius() const { return shape_.getRadius(); }
     sf::Vector2f getPosition() const { return position_; }
     sf::Vector2f getVelocity() const { return velocity_; }
+    bool isOutOfRange() const { return out; }
 
     // Setters
     void setMass(float mass) { mass_ = mass; }
     void setPosition(const sf::Vector2f& pos) { position_ = pos; shape_.setPosition(pos); }
     void setVelocity(const sf::Vector2f& vel) { velocity_ = vel; }
+    void setOutOfRange() { out = true; }
 
     /* Update position based on velocity and timestep (dt)
     x_f = x_i + v * dt */
-    void updatePosition(float dt) { setPosition(position_ + velocity_ * dt); }
+    sf::Vector2f updatePosition(float dt) { setPosition(position_ + velocity_ * dt); return position_; }
 
     /* Apply force for timestep (dt) to update velocity
     F = m * a --> a = F / m
@@ -46,6 +48,7 @@ public:
     static inline sf::Vector2f computeForce(const Particle& p1, const Particle& p2) {
         sf::Vector2f dir = p2.getPosition() - p1.getPosition();
         float distSq = dir.x * dir.x + dir.y * dir.y; 
+        if (distSq < EPSILON) { return {0.f, 0.f}; }
         float r1 = p1.getRadius();
         float r2 = p2.getRadius();
         float minDist = r1 + r2;
@@ -55,11 +58,10 @@ public:
             float dist = std::sqrt(distSq);
             sf::Vector2f normDir = (dist > 0.0001f) ? (dir / (dist)) : sf::Vector2f(0.f, 0.f);
             float overlap = minDist - dist;
-            sf::Vector2f repulsion = HOOKE_K * overlap * normDir;
+            sf::Vector2f repulsion = HOOKE_K * overlap * (-normDir);
             return repulsion;
         }
 
-        if (distSq < minDist * minDist) { distSq = minDist * minDist; dir = p1.getPosition() - p2.getPosition(); } // To avoid division by zero; TODO: implement collision so this is never the case
         float dist = std::sqrt(distSq);
         float forceMag = G * p1.getMass() * p2.getMass() / distSq;
             
@@ -102,6 +104,7 @@ private:
     sf::Vector2f position_;
     sf::Vector2f velocity_;
     sf::CircleShape shape_;
+    bool out = false;
 };
 
 #endif 

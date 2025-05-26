@@ -7,28 +7,57 @@
 class QuadTree {
 public:
     // Constructors
-    QuadTree(const sf::FloatRect& boundary = SCREEN) : boundary_(boundary), particle_(0) {};
-    QuadTree(const std::vector<Particle>& particles, const sf::FloatRect& boundary = SCREEN);
+    QuadTree(){ tree_.emplace_back(Quad()); };
+    QuadTree(const std::vector<Particle>& particles);
 
     bool insertParticle(const Particle& p); // Add particle to QuadTree
-    void updateMassDistribution(); // Propogate QuadTree mass
     sf::Vector2f computeForceOnTarget(const Particle& target); // Use QuadTree to compute mass on particle
-
+    
 private:
-    sf::FloatRect boundary_;  // Region covered by this node
-    Particle* particle_ = nullptr; // Stores a particle for leaf nodes
-    bool hasParticle_ = false;
-    bool subdivided_ = false;
+    struct Quad {
+        sf::Vector2f origin = WINDOW_CENTER;
+        float height = WINDOW_HEIGHT;
+        float width = WINDOW_WIDTH;
 
-    std::unique_ptr<QuadTree> children_[4];  // Children quadtrees 1: NE, 2: NW, 3: SW, 4: SE
-    sf::Vector2f centerOfMass_ = {0.f, 0.f};  // Of the children
-    float totalMass_ = 0.f;
+        Quad(sf::Vector2f o = WINDOW_CENTER, 
+             float w = WINDOW_WIDTH, 
+             float h = WINDOW_HEIGHT)
+            : origin(o), width(w), height(h) {}
+
+    };
+
+    struct QuadTreeNode {
+        Quad region;
+
+        int child_idx = -1; // Index in tree_ of NE child; other 3 are contiguous
+        sf::Vector2f centerOfMass = {0.f, 0.f};
+        float totalMass = 0.f;   
+        bool subdivided = false;
+        bool hasParticle = false;
+        const Particle* particle = nullptr;    
+
+        QuadTreeNode() = default;
+        QuadTreeNode(const Quad& q) : region(q) {}
+
+        bool containsPoint(const sf::Vector2f pos) {
+            return (region.origin.x - region.width / 2 <= pos.x && pos.x < region.origin.x + region.width / 2) && (region.origin.y - region.height / 2 <= pos.y && pos.y < region.origin.y + region.height / 2);
+        }
+
+        bool containsPoint(const Particle& p) {
+            return containsPoint(p.getPosition());
+        }
+
+        bool isLeaf() const { return !subdivided; }
+    };
+    
+    std::vector<QuadTreeNode> tree_;
 
     // Insert and mass update helpers
-    void subdivide();
-    bool isLeaf() const { return !subdivided_; }
-    bool containsPoint(const sf::FloatRect& boundary, const sf::Vector2f& point) { return boundary.contains(point); }
-    
+    void updateMassDistribution(); // Propogate QuadTree mass
+    void subdivide(int idx);
+    bool insertParticle(int idx, const Particle& p); // Add particle to QuadTree
+    void updateMassDistribution(int idx); // Propogate QuadTree mass
+    sf::Vector2f computeForceOnTarget(int idx, const Particle& target); // Use QuadTree to compute mass on particle
 };
 
 #endif 
