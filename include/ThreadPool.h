@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <vector>
-#include <queue>
+#include <deque>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -27,7 +27,7 @@ public:
 
 private:
     std::vector<std::thread> workers; // Worker threads
-    std::queue<std::function<void()>> tasks; // Task queue
+    std::deque<std::function<void()>> tasks; // Task queue
 
     std::mutex queueMutex; // Synchronization
     std::condition_variable condition;
@@ -37,6 +37,7 @@ private:
 template <class F, class... Args>
 auto ThreadPool::enqueue(F&& task, Args&&... args)
     -> std::future<typename std::invoke_result_t<F, Args...>> {
+    if (stop) { throw std::runtime_error("enqueue on stopped ThreadPool"); }
     using return_type = typename std::invoke_result_t<F, Args...>;
 
     auto taskPtr = std::make_shared<std::packaged_task<return_type()>>(
@@ -46,10 +47,10 @@ auto ThreadPool::enqueue(F&& task, Args&&... args)
     std::future<return_type> res = taskPtr->get_future(); // Return the future to get() later
 
     std::unique_lock<std::mutex> lock(queueMutex);
-    tasks.emplace([taskPtr] { (*taskPtr)(); });
+    tasks.emplace_back([taskPtr] { (*taskPtr)(); });
     lock.unlock();
     condition.notify_one(); // Notify any worker thread to take up the task
-    return res; 
+    return std::move(res); 
 }
 
 #endif

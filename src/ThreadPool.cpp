@@ -10,7 +10,7 @@ ThreadPool::ThreadPool(size_t numThreads) : stop(false) {
                 if (stop && tasks.empty()) { return; }
 
                 auto task = std::move(tasks.front());
-                tasks.pop();
+                tasks.pop_front();
                 lock.unlock();
                 task(); // Perform the task
             }
@@ -21,8 +21,9 @@ ThreadPool::ThreadPool(size_t numThreads) : stop(false) {
 ThreadPool::~ThreadPool() {
     std::unique_lock<std::mutex> lock(queueMutex);
     stop = true;
-    lock.unlock();
-    condition.notify_all(); // Notify all worker threads to finish
+    lock.unlock(); 
+
+    condition.notify_all(); // Notify all worker threads to wake up
     for (std::thread &worker : workers) { // Destroy worker threads
         worker.join();
     }

@@ -103,7 +103,7 @@ template <typename Func, typename... Args>
 void createIterSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args, int iters = 0, std::string algoName = "") {
     createSimulation(
         ps.getSize(), algoName, ps, forceComputor,
-        [iters](int i, const sf::Clock&) { return i <= iters || iters == 0; },
+        [iters, &ps](int i, const sf::Clock&) { return (i <= iters || iters == 0) && ps.getSize() != 0; },
         [&algoName](int n, int iters, float totalTime, const sf::Clock&) -> std::vector<std::string> {
             std::ostringstream oss;
 
@@ -138,7 +138,7 @@ template <typename Func, typename... Args>
 void createTimeSimulation(ParticleSystem& ps, Func forceComputor, Args&&... args, int ms = 0, std::string algoName = "") {
     createSimulation(
         ps.getSize(), algoName, ps, forceComputor,
-        [ms](int, const sf::Clock& globalClock) { return globalClock.getElapsedTime().asMilliseconds() < ms || ms == 0; },
+        [ms, &ps](int, const sf::Clock& globalClock) { return (globalClock.getElapsedTime().asMilliseconds() < ms || ms == 0) && ps.getSize() != 0; },
         [&algoName, ms](int n, int iters, float, const sf::Clock& globalClock) -> std::vector<std::string> {
             
             std::vector<std::string> results;
